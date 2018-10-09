@@ -1,0 +1,23 @@
+@media print {
+
+.search-form 
+, .social-bar
+, .social-share
+, .related-posts
+, #site-navigation
+, #site-footer
+{ display:none }
+
+
+#site-header  { position: relative; padding-top: 0; }
+#site-header .header-content { justify-content: center; }
+
+body.single #content { margin-top: 1em; }
+
+.single-post article.post .content-wrapper { max-width: none; font-size: 1em; }
+
+
+.single-post article.post .title { font-size: 1.3em; }
+
+
+} // @media print
