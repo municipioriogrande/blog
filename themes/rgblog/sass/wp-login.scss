@@ -17,6 +17,12 @@ body.login div#login {
 		box-shadow: 0 1px 0 #cc5704;
 		text-shadow: none;
 	}
+	
+	#login_error, 
+	.message, 
+	.success {
+		border-left-color: #ff6b00;
+	}
 }
 
 

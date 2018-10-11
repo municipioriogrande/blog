@@ -12,5 +12,10 @@ body.login div#login #wp-submit {
   box-shadow: 0 1px 0 #cc5704;
   text-shadow: none;
 }
+body.login div#login #login_error,
+body.login div#login .message,
+body.login div#login .success {
+  border-left-color: #ff6b00;
+}
 
 /*# sourceMappingURL=wp-login.css.map */
