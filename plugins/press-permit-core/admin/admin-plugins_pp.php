@@ -86,7 +86,7 @@ class PP_Plugin_Admin {
 	// adds an Options link next to Deactivate, Edit in Plugins listing
 	function flt_plugin_action_links($links, $file) {
 		if ( $file == PPC_BASENAME ) {
-			$links[] = "<a href='http://presspermit.com/forums/'>" . _pp_('Support Forums') . "</a>";
+			$links[] = "<a href='https://presspermit.com/forums/'>" . _pp_('Support Forums') . "</a>";
 			
 			if ( ! is_network_admin() ) {
 			$page = 'pp-settings';
@@ -112,7 +112,7 @@ class PP_Plugin_Admin {
 		
 		if ( ! $this->type_usage_stored() && ! is_network_admin() ) {
 			$url = admin_url('admin.php?page=pp-settings');
-			ppc_notice( sprintf( __( 'Thanks for activating Press Permit Core. Please go to %1$sPermissions > Settings%2$s and indicate which Post Types and Taxonomies should be filtered.', 'pp' ), '<a href="' . $url . '">', '</a>' ), 'updated', false, true );
+			ppc_notice( sprintf( __( 'Thanks for activating Press Permit Core. Please go to %1$sPermissions > Settings%2$s and indicate which Post Types and Taxonomies should be filtered.', 'pp' ), '<a href="' . $url . '">', '</a>' ), 'updated' );
 		}
 	}
 	

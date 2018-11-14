@@ -234,6 +234,7 @@ auEa+7b+FGTKs7dUo2BNGR7OVifK4GZ8w/ajS0TelhrSRi3BBQCGXLzUO/UURUAh
 						$this->whitelistRuleForParam($path, $paramKey, $ruleID, array(
 							'timestamp'   => time(),
 							'description' => 'Whitelisted by via false positive dialog',
+							'source'	  => 'false-positive',
 							'ip'          => $request->getIP(),
 						));
 						$whitelistCount++;
@@ -725,7 +726,7 @@ if (!defined('WFWAF_VERSION')) {
 %s?>
 PHP
 				, $this->buildRuleSet($rules)), 'rules');
-			if (!empty($ruleString) && !WFWAF_DEBUG) {
+			if (!empty($ruleString) && WFWAF_DEBUG && !file_exists($this->getStorageEngine()->getRulesDSLCacheFile())) {
 				wfWAFStorageFile::atomicFilePutContents($this->getStorageEngine()->getRulesDSLCacheFile(), $ruleString, 'rules');
 			}
 
@@ -870,6 +871,23 @@ HTML
 			}
 		}
 		return !empty($this->disabledRules[$ruleID]);
+	}
+	
+	public function getDisabledRuleIDs() {
+		if ($this->disabledRules === null) {
+			$this->disabledRules = $this->getStorageEngine()->getConfig('disabledRules');
+			if (!is_array($this->disabledRules)) {
+				$this->disabledRules = array();
+			}
+		}
+		
+		$ruleIDs = array();
+		foreach ($this->disabledRules as $id => $value) {
+			if (!empty($value)) {
+				$ruleIDs[] = $id;
+			}
+		}
+		return $ruleIDs;
 	}
 
 	/**
@@ -1169,6 +1187,7 @@ HTML
 						$data = array(
 							'timestamp' => time(),
 							'description' => 'Whitelisted while in Learning Mode.',
+							'source' => 'learning-mode',
 							'ip' => $this->getRequest()->getIP(),
 						);
 						if (function_exists('get_current_user_id')) {
@@ -1347,6 +1366,14 @@ HTML
 	public function uninstall() {
 		@unlink($this->getCompiledRulesFile());
 		$this->getStorageEngine()->uninstall();
+	}
+	
+	public function fileList() {
+		$fileList = array($this->getCompiledRulesFile());
+		if (method_exists($this->getStorageEngine(), 'fileList')) {
+			$fileList = array_merge($fileList, $this->getStorageEngine()->fileList());
+		}
+		return $fileList;
 	}
 
 	/**
@@ -1708,14 +1735,19 @@ class wfWAFCronFetchRulesEvent extends wfWAFCronEvent {
 		$success = true;
 		$guessSiteURL = sprintf('%s://%s/', $waf->getRequest()->getProtocol(), $waf->getRequest()->getHost());
 		try {
-			$this->response = wfWAFHTTP::get(WFWAF_API_URL_SEC . "?" . http_build_query(array(
-					'action'   => 'get_waf_rules',
-					'k'        => $waf->getStorageEngine()->getConfig('apiKey', null, 'synced'),
-					's'        => $waf->getStorageEngine()->getConfig('siteURL', null, 'synced') ? $waf->getStorageEngine()->getConfig('siteURL', null, 'synced') : $guessSiteURL,
-					'h'        => $waf->getStorageEngine()->getConfig('homeURL', null, 'synced') ? $waf->getStorageEngine()->getConfig('homeURL', null, 'synced') : $guessSiteURL,
-					'openssl'  => $waf->hasOpenSSL() ? 1 : 0,
-					'betaFeed' => (int) $waf->getStorageEngine()->getConfig('betaThreatDefenseFeed', null, 'synced'),
-				), null, '&'));
+			$payload = array(
+				'action'   => 'get_waf_rules',
+				'k'        => $waf->getStorageEngine()->getConfig('apiKey', null, 'synced'),
+				's'        => $waf->getStorageEngine()->getConfig('siteURL', null, 'synced') ? $waf->getStorageEngine()->getConfig('siteURL', null, 'synced') : $guessSiteURL,
+				'h'        => $waf->getStorageEngine()->getConfig('homeURL', null, 'synced') ? $waf->getStorageEngine()->getConfig('homeURL', null, 'synced') : $guessSiteURL,
+				'openssl'  => $waf->hasOpenSSL() ? 1 : 0,
+				'betaFeed' => (int) $waf->getStorageEngine()->getConfig('betaThreatDefenseFeed', null, 'synced'),
+			);
+			if ($waf->getStorageEngine()->getConfig('other_WFNet', true, 'synced')) {
+				$payload['disabled'] = implode('|', $waf->getDisabledRuleIDs());
+			}
+			
+			$this->response = wfWAFHTTP::get(WFWAF_API_URL_SEC . "?" . http_build_query($payload, null, '&'));
 			if ($this->response) {
 				$jsonData = wfWAFUtils::json_decode($this->response->getBody(), true);
 				if (is_array($jsonData)) {

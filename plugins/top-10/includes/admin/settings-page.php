@@ -332,7 +332,7 @@ function tptn_multicheck_callback( $args ) {
 	$html = '';
 
 	if ( ! empty( $args['options'] ) ) {
-		$html .= sprintf( '<input type="hidden" name="tptn_settings[%1$s]" value="-1" />', $args['id'] );
+		$html .= sprintf( '<input type="hidden" name="tptn_settings[%1$s]" value="-1" />', sanitize_key( $args['id'] ) );
 
 		foreach ( $args['options'] as $key => $option ) {
 			if ( isset( $tptn_settings[ $args['id'] ][ $key ] ) ) {
@@ -590,6 +590,8 @@ function tptn_posttypes_callback( $args ) {
 	);
 	$posts_types_inc = array_intersect( $wp_post_types, $post_types );
 
+	$html .= sprintf( '<input type="hidden" name="tptn_settings[%1$s]" value="-1" />', sanitize_key( $args['id'] ) );
+
 	foreach ( $wp_post_types as $wp_post_type ) {
 
 		$html .= sprintf( '<input name="tptn_settings[%1$s][%2$s]" id="tptn_settings[%1$s][%2$s]" type="checkbox" value="%2$s" %3$s /> ', sanitize_key( $args['id'] ), esc_attr( $wp_post_type ), checked( true, in_array( $wp_post_type, $posts_types_inc, true ), false ) );
@@ -651,7 +653,8 @@ function tptn_tags_search() {
 	}
 
 	$results = get_terms(
-		$taxonomy, array(
+		$taxonomy,
+		array(
 			'name__like' => $s,
 			'fields'     => 'names',
 			'hide_empty' => false,

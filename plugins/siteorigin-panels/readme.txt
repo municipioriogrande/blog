@@ -2,8 +2,8 @@
 Tags: page builder, responsive, widget, widgets, builder, page, admin, gallery, content, cms, pages, post, css, layout, grid
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 2.8.2
-Build time: 2018-08-10T14:17:40+02:00
+Stable tag: 2.9.2
+Build time: 2018-11-09T13:01:10-08:00
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Donate link: https://siteorigin.com/downloads/contribution/
@@ -95,6 +95,27 @@ Page Builder is actively developed and updated, so generally I'd recommend that 
 We've tried to ensure that Page Builder is compatible with most plugin widgets. It's best to just download Page Builder and test for yourself.
 
 == Changelog ==
+
+= 2.9.2 - 9 November 2018 =
+* Block editor: Call `enqueue_registered_widgets_scripts` which will reset global `$post`.
+* Block editor: Only enqueue layout block scripts when using the block editor.
+* WP 5: Fixed styles in the block editor.
+* WP 5: Ensure the block editor scripts are enqueued.
+* WP 5: Fix WP Text Widget for layout block.
+
+= 2.9.1 - 23 October 2018 =
+* Fix auto-excerpt output.
+* Layout builder: Fix 'undefined index' when saving before having added any widgets.
+* Layout builder: Prevent initializing multiple instances of widget dialog.
+* Prevent notices when style field is using 'label' instead of 'name' e.g. for checkbox field.
+
+= 2.9.0 - 9 October 2018 =
+* Automatically extract excerpts from text type widgets found in the first two Page Builder layout rows.
+* Allow media queries with only `min-width`.
+* Only allow moving widgets and rows between Page Builder instances when in Gutenberg editor.
+* Fallback to checking for global `$post` when attempting to disable Gutenberg for existing posts with Page Builder layout data.
+* Yoast compat: Custom widget content handler for WB Accordion and Tabs widgets.
+* Jetpack compat: Fix for Jetpack widgets using the `is_active_widget` check.
 
 = 2.8.2 - 10 August 2018 =
 * Use post ID in content, not revision ID, when saving revisions.
