@@ -94,6 +94,31 @@ $social_sharing_list .= '</ul>';
 							</div>
 						</div>
 
+
+
+						<script type="application/ld+json">
+						{
+							"@context": "http://schema.org",
+							"@type": "NewsArticle",
+							"mainEntityOfPage": {
+								"@type": "WebPage",
+								"@id": "https://google.com/article"
+							},
+							"headline": "<?php echo get_the_title(); ?>",
+							"image": [
+								"<?php echo get_the_post_thumbnail_url(get_the_ID(),'full'); ?>"
+								],
+							"datePublished": "<?php echo rgblog_get_post_date("created")["attr"];?>",
+							"dateModified": "<?php echo rgblog_get_post_date("modified")["attr"];?>",
+							"author": {
+								"@type": "Person",
+								"name": "Municipio Río Grande"
+							},
+							"description": "<?php echo get_the_excerpt();?>"
+						}
+						</script>
+
+
 					</article>
 
 

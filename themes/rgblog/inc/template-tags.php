@@ -7,6 +7,21 @@
  * @package rgblog
  */
 
+
+function rgblog_get_post_date($option="created"){
+
+	if ( $option == "created" ) {
+		return array("attr" => get_the_date( DATE_W3C ), "human" => get_the_date() );
+	}
+
+	if ( $option == "modified" ) {
+		return array("attr" => get_the_modified_date( DATE_W3C ), "human" => get_the_modified_date() );
+	}
+
+	return array("attr" => "", "human" => "" );
+}
+
+
 if ( ! function_exists( 'rgblog_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time.
@@ -17,11 +32,14 @@ if ( ! function_exists( 'rgblog_posted_on' ) ) :
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 		}
 
+		$tmp_c = rgblog_get_post_date("created");
+		$tmp_m = rgblog_get_post_date("modified");
+
 		$time_string = sprintf( $time_string,
-			esc_attr( get_the_date( DATE_W3C ) ),
-			esc_html( get_the_date() ),
-			esc_attr( get_the_modified_date( DATE_W3C ) ),
-			esc_html( get_the_modified_date() )
+			esc_attr( $tmp_c["attr"] ),
+			esc_html( $tmp_c["human"] ),
+			esc_attr( $tmp_m["attr"] ),
+			esc_html( $tmp_m["human"] )
 		);
 
 		$posted_on = sprintf(
@@ -35,8 +53,6 @@ if ( ! function_exists( 'rgblog_posted_on' ) ) :
 	}
 endif;
 
-
-
 if ( ! function_exists( 'rgblog_updated_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time.
@@ -47,22 +63,20 @@ if ( ! function_exists( 'rgblog_updated_on' ) ) :
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 		}
 
+		$tmp_c = rgblog_get_post_date("created");
+		$tmp_m = rgblog_get_post_date("modified");
+
 		$time_string = sprintf( $time_string,
-			esc_attr( get_the_date( DATE_W3C ) ),
-			esc_html( get_the_date() ),
-			esc_attr( get_the_modified_date( DATE_W3C ) ),
-			esc_html( get_the_modified_date() )
+			esc_attr( $tmp_c["attr"] ),
+			esc_html( $tmp_c["human"] ),
+			esc_attr( $tmp_m["attr"] ),
+			esc_html( $tmp_m["human"] )
 		);
 
 		echo '<span class="posted-on">Última actualización: ' . $time_string . '</span>'; // WPCS: XSS OK.
 
 	}
 endif;
-
-
-
-
-
 
 if ( ! function_exists( 'rgblog_posted_by' ) ) :
 	/**
