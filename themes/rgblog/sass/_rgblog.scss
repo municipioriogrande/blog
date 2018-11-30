@@ -39,6 +39,15 @@ $font-awesome-brands: "Font Awesome 5 Brands";
 				transition: $property;
 }
 
+@mixin column-count($property) {
+	 -webkit-column-count: $property;
+		 -moz-column-count: $property;
+			   column-count: $property;
+}
+
+
+
+
 
 body {
 	font-size: 16px;
@@ -327,22 +336,22 @@ a {
 	 z-index: 900;
 
 	 @media screen and (max-width: $mobile-width) {
-		padding-left: 1em;
-		padding-right: 1em;
+		padding: 1em 1em 0;
 	}
 
+
 	.header-content {
-		 max-width: 1080px;
-		 margin: 0 auto;
-		 display: flex;
-		 justify-content: space-between;
-		 align-items: center;
+		max-width: 1080px;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
 		@media screen and (max-width: $mobile-width) {
 			flex-direction: column;
 			align-items: normal;
-		    display: block;
-		    margin: 0 -0.5em;
+		   display: block;
+		   margin: 0 -0.5em;
 	  }
 	}
 	
@@ -356,10 +365,13 @@ a {
 			margin-right: 1em;
 		}
 
-
 		img {
 			width: 180px;
 			@include transition(0.3s linear);
+			
+			@media screen and (max-width: $mobile-width) {
+				width: 150px;
+			}
 
 		}
 	}
@@ -416,7 +428,7 @@ a {
 		margin-top: 1em;
 	}
 
-	ul {
+	& > ul {
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
@@ -425,6 +437,7 @@ a {
 		 margin: 0;
 		 text-align: center;
 		 padding: 0 0 1em;
+		 font-size: 0.6em;
 	  }
 	}
 	li {
@@ -471,6 +484,19 @@ a {
 		opacity: 0;
 		@include transition(visibility 0s);
 		@include transition(opacity 0.5s linear);
+
+
+		
+		@media screen and (max-width: $mobile-width) {
+			max-width: none;
+			right: 0;
+			padding: 1em;
+			margin: 0;
+			text-align: left;
+			overflow: scroll;
+			height: 300px;
+			@include column-count(2);
+		}
 	}
 
 	li.has-submenu:hover ul {
@@ -482,6 +508,11 @@ a {
 		display: inline-block;
 		width: 40%;
 		margin: 0 1.6em 0.5em 0;
+		vertical-align: top;
+		@media screen and (max-width: $mobile-width) {
+			display: block;
+			width: 100%;
+		}
 	}
 }
 
@@ -490,7 +521,7 @@ a {
 	margin: 6em auto 0;
 
 	@media screen and (max-width: $mobile-width) {
-		margin-top: 10em;
+		margin-top: 7em;
   }
 
 }
@@ -713,7 +744,7 @@ body.single #content {
 	flex-wrap: wrap;
 	
 	@media screen and (max-width: $mobile-width) {
-	   margin-top: 6em;
+	   margin-top: 1em;
 	}
 		 
 		 
@@ -747,6 +778,10 @@ body.single #content {
 		li {
 			//display: inline-block;
 			margin: 1em;
+			
+			@media screen and (max-width: $mobile-width) {
+				margin: 0.6em;
+			}		
 
 			a:before {
 				display: inline-block;
@@ -767,12 +802,7 @@ body.single #content {
 
 
 .related-posts .title {
-	//text-align: center;
 	font-size: 1.4em;
-	@media screen and (max-width: $mobile-width) {
-		padding-left: 0em;
-  }
-
 }
 
 .related-posts ul {
@@ -845,6 +875,10 @@ body.single #content {
 	li {
 		display: inline-block;
 		margin: 0 0.5em;
+		
+		@media screen and (max-width:$mobile-width){
+			margin: 0 0.3em;
+		 }
 
 		.page-numbers {
 			border: 2px solid grey;
@@ -854,6 +888,12 @@ body.single #content {
 			width: 3em;
 			height: 3em;
 			line-height: 2.8em;
+
+			@media screen and (max-width:$mobile-width){
+				width: 2.6em;
+				height: 2.6em;
+				line-height: 2.4em;
+			}
 			
 			&:hover,&.current {
 				border-color: $orange;

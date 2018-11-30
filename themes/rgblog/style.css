@@ -1003,6 +1003,9 @@ object {
     margin-bottom: 1em;
   }
 }
+.mini-article > div {
+  margin-bottom: 0.9em;
+}
 .mini-article a {
   color: #002855;
 }
@@ -1014,6 +1017,12 @@ object {
   margin-top: 0.8em;
   font-weight: 700;
   font-family: "Muli", Arial, sans-serif;
+}
+@media screen and (max-width: 400px) {
+  .mini-article .title {
+    font-size: 1.4em;
+    line-height: 1.4em;
+  }
 }
 .mini-article .image {
   order: 1;
@@ -1027,6 +1036,7 @@ object {
 }
 @media screen and (max-width: 400px) {
   .mini-article .image {
+    height: 200px;
     background-position: left top;
   }
 }
@@ -1348,8 +1358,7 @@ a {
 }
 @media screen and (max-width: 400px) {
   #site-header {
-    padding-left: 1em;
-    padding-right: 1em;
+    padding: 1em 1em 0;
   }
 }
 #site-header .header-content {
@@ -1385,6 +1394,11 @@ a {
   -ms-transition: 0.3s linear;
   -o-transition: 0.3s linear;
   transition: 0.3s linear;
+}
+@media screen and (max-width: 400px) {
+  #site-header .logo img {
+    width: 150px;
+  }
 }
 #site-header.scrolled {
   padding: 1em 5em 0;
@@ -1436,16 +1450,17 @@ a {
     margin-top: 1em;
   }
 }
-#site-header .nav ul {
+#site-header .nav > ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 @media screen and (max-width: 400px) {
-  #site-header .nav ul {
+  #site-header .nav > ul {
     margin: 0;
     text-align: center;
     padding: 0 0 1em;
+    font-size: 0.6em;
   }
 }
 #site-header .nav li {
@@ -1507,6 +1522,20 @@ a {
   -o-transition: opacity 0.5s linear;
   transition: opacity 0.5s linear;
 }
+@media screen and (max-width: 400px) {
+  #site-header .nav li.has-submenu ul {
+    max-width: none;
+    right: 0;
+    padding: 1em;
+    margin: 0;
+    text-align: left;
+    overflow: scroll;
+    height: 300px;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+}
 #site-header .nav li.has-submenu:hover ul {
   visibility: visible;
   opacity: 1;
@@ -1515,6 +1544,13 @@ a {
   display: inline-block;
   width: 40%;
   margin: 0 1.6em 0.5em 0;
+  vertical-align: top;
+}
+@media screen and (max-width: 400px) {
+  #site-header .nav li.has-submenu ul li {
+    display: block;
+    width: 100%;
+  }
 }
 
 #content {
@@ -1523,7 +1559,7 @@ a {
 }
 @media screen and (max-width: 400px) {
   #content {
-    margin-top: 10em;
+    margin-top: 7em;
   }
 }
 
@@ -1743,7 +1779,7 @@ body.single #content {
 }
 @media screen and (max-width: 400px) {
   .single article .social-links {
-    margin-top: 6em;
+    margin-top: 1em;
   }
 }
 
@@ -1774,6 +1810,11 @@ body.single #content {
 .single article .social-share .social-links li {
   margin: 1em;
 }
+@media screen and (max-width: 400px) {
+  .single article .social-share .social-links li {
+    margin: 0.6em;
+  }
+}
 .single article .social-share .social-links li a:before {
   display: inline-block;
   color: #fff;
@@ -1793,11 +1834,6 @@ body.single #content {
 
 .related-posts .title {
   font-size: 1.4em;
-}
-@media screen and (max-width: 400px) {
-  .related-posts .title {
-    padding-left: 0em;
-  }
 }
 
 .related-posts ul {
@@ -1872,6 +1908,11 @@ body.single #content {
   display: inline-block;
   margin: 0 0.5em;
 }
+@media screen and (max-width: 400px) {
+  .page-show-posts-grid ul.page-numbers li {
+    margin: 0 0.3em;
+  }
+}
 .page-show-posts-grid ul.page-numbers li .page-numbers {
   border: 2px solid grey;
   -webkit-border-radius: 6em;
@@ -1883,6 +1924,13 @@ body.single #content {
   width: 3em;
   height: 3em;
   line-height: 2.8em;
+}
+@media screen and (max-width: 400px) {
+  .page-show-posts-grid ul.page-numbers li .page-numbers {
+    width: 2.6em;
+    height: 2.6em;
+    line-height: 2.4em;
+  }
 }
 .page-show-posts-grid ul.page-numbers li .page-numbers:hover, .page-show-posts-grid ul.page-numbers li .page-numbers.current {
   border-color: #ff6a00;
