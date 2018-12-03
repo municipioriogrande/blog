@@ -114,6 +114,14 @@ $social_sharing_list .= '</ul>';
 								"@type": "Person",
 								"name": "Municipio Río Grande"
 							},
+							"publisher": {
+								"@type": "Organization",
+								"name": "Municipio Río Grande",
+									"logo": {
+										"@type": "ImageObject",
+										"url": "https://info.riogrande.gob.ar/wp-content/themes/rgblog/img/logo.png"
+									}
+								},							
 							"description": "<?php echo get_the_excerpt();?>"
 						}
 						</script>
