@@ -1454,6 +1454,7 @@ a {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 @media screen and (max-width: 720px) {
   #site-header .nav > ul {
@@ -1506,7 +1507,7 @@ a {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
   position: absolute;
   max-width: 350px;
-  right: 2em;
+  right: 0em;
   padding: 1em 0em 1em 2em;
   background-color: #fff;
   visibility: hidden;
