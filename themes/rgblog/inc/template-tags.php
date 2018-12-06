@@ -27,9 +27,9 @@ if ( ! function_exists( 'rgblog_posted_on' ) ) :
 	 * Prints HTML with meta information for the current post-date/time.
 	 */
 	function rgblog_posted_on() {
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+		$time_string = '<time class="entry-date published updated dt-published" datetime="%1$s" itemprop="datePublished">%2$s</time>';
 		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+			$time_string = '<time class="entry-date published dt-published" datetime="%1$s" itemprop="datePublished">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 		}
 
 		$tmp_c = rgblog_get_post_date("created");
@@ -58,9 +58,9 @@ if ( ! function_exists( 'rgblog_updated_on' ) ) :
 	 * Prints HTML with meta information for the current post-date/time.
 	 */
 	function rgblog_updated_on() {
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+		$time_string = '<time class="entry-date published updated dt-updated" datetime="%1$s" itemprop="datePublished">%2$s</time>';
 		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+			$time_string = '<time class="entry-date published dt-updated" datetime="%1$s" itemprop="datePublished">%2$s</time><time class="updated" datetime="%3$s" >%4$s</time>';
 		}
 
 		$tmp_c = rgblog_get_post_date("created");
@@ -169,13 +169,13 @@ if ( ! function_exists( 'rgblog_post_thumbnail' ) ) :
 		if ( is_singular() ) :
 			?>
 
-			<div class="post-thumbnail">
+			<div class="post-thumbnail u-photo">
 				<?php the_post_thumbnail($size); ?>
 			</div><!-- .post-thumbnail -->
 
 		<?php else : ?>
 
-		<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
+		<a class="post-thumbnail u-photo" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1" >
 			<?php
 			the_post_thumbnail( 'post-thumbnail', array(
 				'alt' => the_title_attribute( array(

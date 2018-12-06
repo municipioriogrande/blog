@@ -35,7 +35,7 @@ $social_sharing_list .= '</ul>';
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main single-post">
 
-			<section class="post-wrapper">
+			<section class="post-wrapper h-entry" itemscope itemtype="http://schema.org/NewsArticle">
 
 				<?php
 				while ( have_posts() ) :
@@ -50,18 +50,21 @@ $social_sharing_list .= '</ul>';
 					}
 
 					//$categories_list = get_the_category_list( esc_html__( ', ', 'rgblog' ) );
+
+					$post_thumbnail_url = get_the_post_thumbnail_url(get_the_ID(),'full');
+
 					?>
 
 					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 						<?php if ( $category_links ) : ?>
-							<p class="category uppercase">									
+							<p class="category uppercase p-category tags" itemprop="articleSection">									
 								<?php echo implode(" • ", $category_links);?>
 							</p>
 						<?php endif; ?>
 
-						<h1 class="title">
-							<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+						<h1 class="title p-name entry-title" itemprop="headline">
+							<a href="<?php the_permalink(); ?>" class="u-url" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
 						</h1>
 
 						<?php rgblog_post_thumbnail("large"); ?>
@@ -71,9 +74,12 @@ $social_sharing_list .= '</ul>';
 								<?php echo $social_sharing_list; ?>
 							</div>
 							<div class="content-wrapper">
-								<div class="content">
+								<div class="content e-content entry-content" itemprop="articleBody">
 									<?php the_content(); ?>
 								</div>
+								<meta itemprop="author" content="Municipio de Río Grande">
+								<meta itemprop="publisher" content="Municipio de Río Grande">
+								<meta itemprop="image" content="<?php echo $post_thumbnail_url;?>">
 
 								<p class="date"><?php rgblog_updated_on();?></p>
 								<?php 
@@ -81,7 +87,7 @@ $social_sharing_list .= '</ul>';
 								if ( $category_links ) : ?>
 									<p class="category">
 										<span class="uppercase">Tags: </span>
-										<?php echo implode(", ", $category_links);?>
+										<span itemprop="articleSection"><?php echo implode(", ", $category_links);?></span>
 									</p>
 									<?php
 								endif; ?>
@@ -106,7 +112,7 @@ $social_sharing_list .= '</ul>';
 							},
 							"headline": "<?php echo get_the_title(); ?>",
 							"image": [
-								"<?php echo get_the_post_thumbnail_url(get_the_ID(),'full'); ?>"
+								"<?php echo $post_thumbnail_url; ?>"
 								],
 							"datePublished": "<?php echo rgblog_get_post_date("created")["attr"];?>",
 							"dateModified": "<?php echo rgblog_get_post_date("modified")["attr"];?>",
