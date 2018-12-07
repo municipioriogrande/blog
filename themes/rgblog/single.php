@@ -35,7 +35,7 @@ $social_sharing_list .= '</ul>';
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main single-post">
 
-			<section class="post-wrapper h-entry" itemscope itemtype="http://schema.org/NewsArticle">
+			<section class="post-wrapper">
 
 				<?php
 				while ( have_posts() ) :
@@ -46,16 +46,17 @@ $social_sharing_list .= '</ul>';
 					$category_links = array();
 					foreach($categories as $category) {
 						$category_ids[] = $category->term_id;
-						$category_links[] = '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" rel="category tag">' . $category->name . '</a>';
+						//$category_links[] = '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" rel="category tag">' . $category->name . '</a>';
+						$category_links[] = '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a>';
 					}
 
 					//$categories_list = get_the_category_list( esc_html__( ', ', 'rgblog' ) );
 
 					$post_thumbnail_url = get_the_post_thumbnail_url(get_the_ID(),'full');
-
+					$post_classes = get_post_class(array("h-entry"));
 					?>
 
-					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<article id="post-<?php the_ID(); ?>" class="<?php echo implode(' ', $post_classes);?>"  itemscope itemtype="http://schema.org/NewsArticle">
 
 						<?php if ( $category_links ) : ?>
 							<p class="category uppercase p-category tags" itemprop="articleSection">									
@@ -93,10 +94,9 @@ $social_sharing_list .= '</ul>';
 								endif; ?>
 
 
-						<div class="social-share">
-							<p>Si te gustó este artículo puedes compartirlo</p>
-							<?php echo $social_sharing_list; ?>
-						</div>
+							<div class="social-share">
+								<p>Si te gustó este artículo puedes compartirlo</p>
+								<?php echo $social_sharing_list; ?>
 							</div>
 						</div>
 
