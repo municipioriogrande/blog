@@ -1736,6 +1736,15 @@ body.single #content {
   color: #ff6a00;
   text-decoration: underline;
 }
+.single article .content-wrapper .entry-content p:first-child,
+.single article .content-wrapper .entry-content h3:first-child,
+.single article .content-wrapper .entry-content h4:first-child {
+  font-weight: bold;
+  text-align: center;
+  font-style: italic;
+  line-height: 1.7em;
+  font-size: medium;
+}
 .single article .content-wrapper .date {
   font-size: small;
   text-align: right;
