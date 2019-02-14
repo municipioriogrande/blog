@@ -3,8 +3,8 @@ Tags: popular posts, top 10, counter, top posts, daily popular, page views, stat
 Contributors: webberzone, Ajay
 Donate link: https://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 4.1
-Tested up to: 4.9
+Requires at least: 4.5
+Tested up to: 5.0
 License: GPLv2 or later
 
 Track daily and total visits on your blog posts. Display the count as well as popular and trending posts.
@@ -170,6 +170,29 @@ add_filter( 'manage_edit-projects_sortable_columns', 'tptn_column_register_sorta
 
 == Changelog ==
 
+= 2.6.1 =
+
+* Bug fixes:
+	* Fixed widget daily and hourly range not working which was broken in v2.6.0
+
+= 2.6.0 =
+
+* Features:
+	* New option to disable creation of image thumbnails. Find this under Thumbnail options
+	* Thumbnail HTML markup includes `srcset` and `sizes` attributes when available. Read [Responsive Images in WordPress 4.4](https://make.wordpress.org/core/2015/11/10/responsive-images-in-wordpress-4-4/)
+	* New option to turn on debug mode. You can turn this on when requesting support. Find it under the Counter/Tracker tab
+	* New option to add the tracker js file on all pages, not just singular pages. Helps with minification/concatenation
+	* New date filter in the Popular posts listing page to see the views on a particular date
+	* New option to turn ON/OFF the number formatting of the post counts. ON by default
+
+* Enhancements:
+	* Load tracker in footer
+	* Renamed top-10-tracker.js to top-10-tracker.min.js
+
+* Bug fixes:
+	* Only delete option if null value is passed to tptn_update_option
+	* "Exclude display on these post IDs" moved under Counter section
+
 = 2.5.7 =
 
 * Enhancements:
@@ -285,7 +308,7 @@ For previous changelog entries, please refer to the separate changelog.txt file
 
 == Upgrade Notice ==
 
-= 2.5.4 =
-* Major release! Brand new settings interface so please do verify your settings after the upgrade. Several new features and bug fixes.
+= 2.6.1 =
+* Major release! Several new features and bug fixes. Please verify your settings after upgrade.
 Check the Changelog for more details
 

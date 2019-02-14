@@ -15,8 +15,8 @@ function tptn_header() {
 	$tptn_custom_css = stripslashes( tptn_get_option( 'custom_css' ) );
 
 	// Add CSS to header.
-	if ( '' != $tptn_custom_css ) { // WPCS: loose comparison ok.
-		echo '<style type="text/css">' . $tptn_custom_css . '</style>'; // WPCS: XSS ok.
+	if ( '' != $tptn_custom_css ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+		echo '<style type="text/css">' . $tptn_custom_css . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 add_action( 'wp_head', 'tptn_header' );
@@ -28,7 +28,7 @@ add_action( 'wp_head', 'tptn_header' );
 function tptn_heading_styles() {
 
 	if ( 'left_thumbs' === tptn_get_option( 'tptn_styles' ) ) {
-		wp_register_style( 'tptn-style-left-thumbs', plugins_url( 'css/default-style.css', TOP_TEN_PLUGIN_FILE ) );
+		wp_register_style( 'tptn-style-left-thumbs', plugins_url( 'css/default-style.css', TOP_TEN_PLUGIN_FILE ), array(), '1.0' );
 		wp_enqueue_style( 'tptn-style-left-thumbs' );
 
 		$width  = tptn_get_option( 'thumb_width' );

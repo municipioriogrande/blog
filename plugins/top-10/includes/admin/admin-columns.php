@@ -6,7 +6,7 @@
  * @author    Ajay D'Souza <me@ajaydsouza.com>
  * @license   GPL-2.0+
  * @link      https://webberzone.com
- * @copyright 2008-2016 Ajay D'Souza
+ * @copyright 2008-2019 Ajay D'Souza
  */
 
 /**** If this file is called directly, abort. ****/
@@ -54,8 +54,8 @@ function tptn_value( $column_name, $id ) {
 	if ( ( 'tptn_total' === $column_name ) && ( tptn_get_option( 'pv_in_admin' ) ) ) {
 		$table_name = $wpdb->base_prefix . 'top_ten';
 
-		$resultscount = $wpdb->get_row( $wpdb->prepare( "SELECT postnumber, cntaccess FROM {$table_name} WHERE postnumber = %d AND blog_id = %d ", $id, $blog_id ) ); // DB call ok; no-cache ok; WPCS: unprepared SQL OK.
-		$cntaccess    = number_format_i18n( ( ( $resultscount ) ? $resultscount->cntaccess : 0 ) );
+		$resultscount = $wpdb->get_row( $wpdb->prepare( "SELECT postnumber, cntaccess FROM {$table_name} WHERE postnumber = %d AND blog_id = %d ", $id, $blog_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$cntaccess    = tptn_number_format_i18n( ( ( $resultscount ) ? $resultscount->cntaccess : 0 ) );
 		echo esc_html( $cntaccess );
 	}
 
@@ -63,21 +63,10 @@ function tptn_value( $column_name, $id ) {
 	if ( ( 'tptn_daily' === $column_name ) && ( tptn_get_option( 'pv_in_admin' ) ) ) {
 		$table_name = $wpdb->base_prefix . 'top_ten_daily';
 
-		$daily_range = tptn_get_option( 'daily_range' );
-		$hour_range  = tptn_get_option( 'hour_range' );
+		$from_date = tptn_get_from_date();
 
-		if ( tptn_get_option( 'daily_midnight' ) ) {
-			$current_time = current_time( 'timestamp', 0 );
-			$from_date    = $current_time - ( max( 0, ( $daily_range - 1 ) ) * DAY_IN_SECONDS );
-			$from_date    = gmdate( 'Y-m-d 0', $from_date );
-		} else {
-			$current_time = current_time( 'timestamp', 0 );
-			$from_date    = $current_time - ( $daily_range * DAY_IN_SECONDS + $hour_range * HOUR_IN_SECONDS );
-			$from_date    = gmdate( 'Y-m-d H', $from_date );
-		}
-
-		$resultscount = $wpdb->get_row( $wpdb->prepare( "SELECT postnumber, SUM(cntaccess) as sum_count FROM {$table_name} WHERE postnumber = %d AND dp_date >= %s AND blog_id = %d GROUP BY postnumber ", $id, $from_date, $blog_id ) ); // DB call ok; no-cache ok; WPCS: unprepared SQL OK.
-		$cntaccess    = number_format_i18n( ( ( $resultscount ) ? $resultscount->sum_count : 0 ) );
+		$resultscount = $wpdb->get_row( $wpdb->prepare( "SELECT postnumber, SUM(cntaccess) as sum_count FROM {$table_name} WHERE postnumber = %d AND dp_date >= %s AND blog_id = %d GROUP BY postnumber ", $id, $from_date, $blog_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$cntaccess    = tptn_number_format_i18n( ( ( $resultscount ) ? $resultscount->sum_count : 0 ) );
 		echo esc_html( $cntaccess );
 	}
 
@@ -85,26 +74,15 @@ function tptn_value( $column_name, $id ) {
 	if ( ( 'tptn_both' === $column_name ) && ( tptn_get_option( 'pv_in_admin' ) ) ) {
 		$table_name = $wpdb->base_prefix . 'top_ten';
 
-		$resultscount = $wpdb->get_row( $wpdb->prepare( "SELECT postnumber, cntaccess FROM {$table_name} WHERE postnumber = %d AND blog_id = %d ", $id, $blog_id ) ); // DB call ok; no-cache ok; WPCS: unprepared SQL OK.
-		$cntaccess    = number_format_i18n( ( ( $resultscount ) ? $resultscount->cntaccess : 0 ) );
+		$resultscount = $wpdb->get_row( $wpdb->prepare( "SELECT postnumber, cntaccess FROM {$table_name} WHERE postnumber = %d AND blog_id = %d ", $id, $blog_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$cntaccess    = tptn_number_format_i18n( ( ( $resultscount ) ? $resultscount->cntaccess : 0 ) );
 
 		$table_name = $wpdb->base_prefix . 'top_ten_daily';
 
-		$daily_range = tptn_get_option( 'daily_range' );
-		$hour_range  = tptn_get_option( 'hour_range' );
+		$from_date = tptn_get_from_date();
 
-		if ( tptn_get_option( 'daily_midnight' ) ) {
-			$current_time = current_time( 'timestamp', 0 );
-			$from_date    = $current_time - ( max( 0, ( $daily_range - 1 ) ) * DAY_IN_SECONDS );
-			$from_date    = gmdate( 'Y-m-d 0', $from_date );
-		} else {
-			$current_time = current_time( 'timestamp', 0 );
-			$from_date    = $current_time - ( $daily_range * DAY_IN_SECONDS + $hour_range * HOUR_IN_SECONDS );
-			$from_date    = gmdate( 'Y-m-d H', $from_date );
-		}
-
-		$resultscount = $wpdb->get_row( $wpdb->prepare( "SELECT postnumber, SUM(cntaccess) as sum_count FROM {$table_name} WHERE postnumber = %d AND dp_date >= %s AND blog_id = %d GROUP BY postnumber ", $id, $from_date, $blog_id ) ); // DB call ok; no-cache ok; WPCS: unprepared SQL OK.
-		$cntaccess   .= ' / ' . number_format_i18n( ( ( $resultscount ) ? $resultscount->sum_count : 0 ) );
+		$resultscount = $wpdb->get_row( $wpdb->prepare( "SELECT postnumber, SUM(cntaccess) as sum_count FROM {$table_name} WHERE postnumber = %d AND dp_date >= %s AND blog_id = %d GROUP BY postnumber ", $id, $from_date, $blog_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$cntaccess   .= ' / ' . tptn_number_format_i18n( ( ( $resultscount ) ? $resultscount->sum_count : 0 ) );
 
 		echo esc_html( $cntaccess );
 	}
@@ -158,18 +136,7 @@ function tptn_column_clauses( $clauses, $wp_query ) {
 
 		$table_name = $wpdb->base_prefix . 'top_ten_daily';
 
-		$daily_range = tptn_get_option( 'daily_range' );
-		$hour_range  = tptn_get_option( 'hour_range' );
-
-		if ( tptn_get_option( 'daily_midnight' ) ) {
-			$current_time = current_time( 'timestamp', 0 );
-			$from_date    = $current_time - ( max( 0, ( $daily_range - 1 ) ) * DAY_IN_SECONDS );
-			$from_date    = gmdate( 'Y-m-d 0', $from_date );
-		} else {
-			$current_time = current_time( 'timestamp', 0 );
-			$from_date    = $current_time - ( $daily_range * DAY_IN_SECONDS + $hour_range * HOUR_IN_SECONDS );
-			$from_date    = gmdate( 'Y-m-d H', $from_date );
-		}
+		$from_date = tptn_get_from_date();
 
 		$clauses['join']    .= "LEFT OUTER JOIN {$table_name} ON {$wpdb->posts}.ID={$table_name}.postnumber";
 		$clauses['where']   .= " AND {$table_name}.dp_date >= '$from_date' ";

@@ -6,7 +6,7 @@
  * @author    Ajay D'Souza <me@ajaydsouza.com>
  * @license   GPL-2.0+
  * @link      https://webberzone.com
- * @copyright 2008-2016 Ajay D'Souza
+ * @copyright 2008-2019 Ajay D'Souza
  */
 
 // If this file is called directly, abort.
@@ -101,23 +101,17 @@ class Top_Ten_Count_Widget extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		global $wpdb;
-
-		$table_name = $wpdb->base_prefix . 'top_ten';
 
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'] );
-
-		$resultscount = $wpdb->get_row( 'SELECT SUM(cntaccess) as sum_count FROM ' . $table_name ); // WPCS: unprepared SQL OK.
-		$cntaccess    = number_format_i18n( ( ( $resultscount ) ? $resultscount->sum_count : 0 ) );
 
 		$output  = $args['before_widget'];
 		$output .= $args['before_title'] . $title . $args['after_title'];
 
-		$output .= $cntaccess;
+		$output .= get_tptn_post_count_only( 1, 'overall', 0 );
 
 		$output .= $args['after_widget'];
 
-		echo $output; // WPCS: XSS OK.
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	} //ending function widget
 

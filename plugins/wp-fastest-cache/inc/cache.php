@@ -81,20 +81,19 @@
 			if($this->isMobile() && isset($this->options->wpFastestCacheMobile)){
 				if(class_exists("WpFcMobileCache") && isset($this->options->wpFastestCacheMobileTheme)){
 					$wpfc_mobile = new WpFcMobileCache();
-					$this->cacheFilePath = $this->getWpContentDir()."/cache/".$wpfc_mobile->get_folder_name()."".$_SERVER["REQUEST_URI"];
+					$this->cacheFilePath = $this->getWpContentDir("/cache/wpfc-mobile-cache").$_SERVER["REQUEST_URI"];
 				}
 			}else{
 				if($this->isPluginActive('gtranslate/gtranslate.php')){
 					if(isset($_SERVER["HTTP_X_GT_LANG"])){
-						//$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["HTTP_X_GT_LANG"];
-						$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["HTTP_X_GT_LANG"].$_SERVER["REQUEST_URI"];
+						$this->cacheFilePath = $this->getWpContentDir("/cache/all/").$_SERVER["HTTP_X_GT_LANG"].$_SERVER["REQUEST_URI"];
 					}else if(isset($_SERVER["REDIRECT_URL"]) && $_SERVER["REDIRECT_URL"] != "/index.php"){
-						$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["REDIRECT_URL"];
+						$this->cacheFilePath = $this->getWpContentDir("/cache/all/").$_SERVER["REDIRECT_URL"];
 					}else if(isset($_SERVER["REQUEST_URI"])){
-						$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["REQUEST_URI"];
+						$this->cacheFilePath = $this->getWpContentDir("/cache/all/").$_SERVER["REQUEST_URI"];
 					}
 				}else{
-					$this->cacheFilePath = $this->getWpContentDir()."/cache/all/".$_SERVER["REQUEST_URI"];
+					$this->cacheFilePath = $this->getWpContentDir("/cache/all/").$_SERVER["REQUEST_URI"];
 				}
 			}
 
@@ -103,7 +102,9 @@
 			$language_negotiation_type = apply_filters('wpml_setting', false, 'language_negotiation_type');
 			if ($this->isPluginActive('sitepress-multilingual-cms/sitepress.php') && 2 == $language_negotiation_type){
 			    $current_language = apply_filters('wpml_current_language', false);
+			    
 			    $this->cacheFilePath = str_replace('/cache/all/', '/cache/all/'.$current_language.'/', $this->cacheFilePath);
+			    $this->cacheFilePath = str_replace('/cache/wpfc-mobile-cache/', '/cache/wpfc-mobile-cache/'.$current_language.'/', $this->cacheFilePath);
 			}
 
 
@@ -688,10 +689,6 @@
 				}else{
 					$content = $this->cacheDate($content);
 					$content = $this->minify($content);
-
-					$content = $this->cdn_rewrite($content);
-					
-					
 					$content = str_replace("<!--WPFC_FOOTER_START-->", "", $content);
 
 
@@ -724,6 +721,10 @@
 							$content = preg_replace("/\s*<\/head\s*>/i", $lazy_load_js."</head>", $content, 1);
 						}
 					}
+
+
+					$content = $this->cdn_rewrite($content);
+
 
 					// WP Hide & Security Enhancer
 					if($this->isPluginActive('wp-hide-security-enhancer/wp-hide.php')){
@@ -958,7 +959,7 @@
 		public function is_amp($content){
 			$request_uri = trim($_SERVER["REQUEST_URI"], "/");
 
-			if(preg_match("/^amp/", $request_uri) || preg_match("/amp$/", $request_uri)){
+			if(preg_match("/^amp/", $request_uri) || preg_match("/\/amp\//", $request_uri) || preg_match("/amp$/", $request_uri)){
 				if(preg_match("/<html[^\>]+amp[^\>]*>/i", $content)){
 					return true;
 				}

@@ -119,6 +119,8 @@
 
 					if(current_user_can('manage_options')){
 						if($_POST["wpFastestCachePage"] == "options"){
+							$this->exclude_urls();
+
 							$this->saveOption();
 						}else if($_POST["wpFastestCachePage"] == "deleteCache"){
 							$this->deleteCache();
@@ -129,6 +131,46 @@
 						}
 					}else{
 						die("Forbidden");
+					}
+				}
+			}
+		}
+
+		public function exclude_urls(){
+			// to exclude wishlist url of YITH WooCommerce Wishlist
+			if($this->isPluginActive('yith-woocommerce-wishlist/init.php')){
+				$wishlist_page_id = get_option("yith_wcwl_wishlist_page_id");
+				$permalink = urldecode(get_permalink($wishlist_page_id));
+
+				if(preg_match("/https?:\/\/[^\/]+\/(.+)/", $permalink, $out)){
+					$url = trim($out[1], "/");
+				}
+			}
+
+
+			if(isset($url) && $url){
+				$rules_std = array();
+				$rules_json = get_option("WpFastestCacheExclude");
+
+				$new_rule = new stdClass;
+				$new_rule->prefix = "exact";
+				$new_rule->content = $url;
+				$new_rule->type = "page";
+
+
+				if($rules_json === false){
+					array_push($rules_std, $new_rule);
+					add_option("WpFastestCacheExclude", json_encode($rules_std), null, "yes");
+				}else{
+					$rules_std = json_decode($rules_json);
+
+					if(!is_array($rules_std)){
+						$rules_std = array();
+					}
+
+					if(!in_array($new_rule, $rules_std)){
+						array_push($rules_std, $new_rule);
+						update_option("WpFastestCacheExclude", json_encode($rules_std));
 					}
 				}
 			}
@@ -252,29 +294,29 @@
 		public function checkCachePathWriteable(){
 			$message = array();
 
-			if(!is_dir($this->getWpContentDir()."/cache/")){
-				if (@mkdir($this->getWpContentDir()."/cache/", 0755, true)){
+			if(!is_dir($this->getWpContentDir("/cache/"))){
+				if (@mkdir($this->getWpContentDir("/cache/"), 0755, true)){
 					//
 				}else{
 					array_push($message, "- /wp-content/cache/ is needed to be created");
 				}
 			}else{
-				if (@mkdir($this->getWpContentDir()."/cache/testWpFc/", 0755, true)){
-					rmdir($this->getWpContentDir()."/cache/testWpFc/");
+				if (@mkdir($this->getWpContentDir("/cache/testWpFc/"), 0755, true)){
+					rmdir($this->getWpContentDir("/cache/testWpFc/"));
 				}else{
 					array_push($message, "- /wp-content/cache/ permission has to be 755");
 				}
 			}
 
-			if(!is_dir($this->getWpContentDir()."/cache/all/")){
-				if (@mkdir($this->getWpContentDir()."/cache/all/", 0755, true)){
+			if(!is_dir($this->getWpContentDir("/cache/all/"))){
+				if (@mkdir($this->getWpContentDir("/cache/all/"), 0755, true)){
 					//
 				}else{
 					array_push($message, "- /wp-content/cache/all/ is needed to be created");
 				}
 			}else{
-				if (@mkdir($this->getWpContentDir()."/cache/all/testWpFc/", 0755, true)){
-					rmdir($this->getWpContentDir()."/cache/all/testWpFc/");
+				if (@mkdir($this->getWpContentDir("/cache/all/testWpFc/"), 0755, true)){
+					rmdir($this->getWpContentDir("/cache/all/testWpFc/"));
 				}else{
 					array_push($message, "- /wp-content/cache/all/ permission has to be 755");
 				}	
@@ -480,24 +522,24 @@
 					'AddType application/font-woff2 .woff2'."\n".
 					'ExpiresActive On'."\n".
 					'ExpiresDefault A0'."\n".
-					'ExpiresByType video/webm A2592000'."\n".
-					'ExpiresByType video/ogg A2592000'."\n".
-					'ExpiresByType video/mp4 A2592000'."\n".
-					'ExpiresByType image/webp A2592000'."\n".
-					'ExpiresByType image/gif A2592000'."\n".
-					'ExpiresByType image/png A2592000'."\n".
-					'ExpiresByType image/jpg A2592000'."\n".
-					'ExpiresByType image/jpeg A2592000'."\n".
-					'ExpiresByType image/ico A2592000'."\n".
-					'ExpiresByType image/svg+xml A2592000'."\n".
-					'ExpiresByType text/css A2592000'."\n".
-					'ExpiresByType text/javascript A2592000'."\n".
-					'ExpiresByType application/javascript A2592000'."\n".
-					'ExpiresByType application/x-javascript A2592000'."\n".
-					'ExpiresByType application/font-woff2 A2592000'."\n".
+					'ExpiresByType video/webm A10368000'."\n".
+					'ExpiresByType video/ogg A10368000'."\n".
+					'ExpiresByType video/mp4 A10368000'."\n".
+					'ExpiresByType image/webp A10368000'."\n".
+					'ExpiresByType image/gif A10368000'."\n".
+					'ExpiresByType image/png A10368000'."\n".
+					'ExpiresByType image/jpg A10368000'."\n".
+					'ExpiresByType image/jpeg A10368000'."\n".
+					'ExpiresByType image/ico A10368000'."\n".
+					'ExpiresByType image/svg+xml A10368000'."\n".
+					'ExpiresByType text/css A10368000'."\n".
+					'ExpiresByType text/javascript A10368000'."\n".
+					'ExpiresByType application/javascript A10368000'."\n".
+					'ExpiresByType application/x-javascript A10368000'."\n".
+					'ExpiresByType application/font-woff2 A10368000'."\n".
 					'</IfModule>'."\n".
 					'<IfModule mod_headers.c>'."\n".
-					'Header set Expires "max-age=2592000, public"'."\n".
+					'Header set Expires "max-age=A10368000, public"'."\n".
 					'Header unset ETag'."\n".
 					'Header set Connection keep-alive'."\n".
 					'FileETag None'."\n".
@@ -998,6 +1040,7 @@
 							<?php 
 								$tester_arr_mobile = array(
 									"tr-TR",
+									"tr",
 									"berkatan.com",
 									"yenihobiler.com",
 									"hobiblogu.com",
@@ -1258,12 +1301,16 @@
 																"tr" => "Türkçe"
 															);
 											foreach($lang_array as $lang_array_key => $lang_array_value){
-												if(isset($this->options->wpFastestCacheLanguage) && $this->options->wpFastestCacheLanguage == $lang_array_key){
-													$option_selected = 'selected="selected"';
-												}else if($lang_array_key == "eng"){
-													$option_selected = 'selected="selected"';
+												$option_selected = "";
+
+												if(isset($this->options->wpFastestCacheLanguage) && $this->options->wpFastestCacheLanguage && $this->options->wpFastestCacheLanguage != "eng"){
+													if(isset($this->options->wpFastestCacheLanguage) && $this->options->wpFastestCacheLanguage == $lang_array_key){
+														$option_selected = 'selected="selected"';
+													}
 												}else{
-													$option_selected = "";
+													if($lang_array_key == "eng"){
+														$option_selected = 'selected="selected"';
+													}
 												}
 
 												echo '<option '.$option_selected.' value="'.$lang_array_key.'">'.$lang_array_value.'</option>';
@@ -1348,7 +1395,7 @@
 				    		<div class="questionCon right">
 				    			<div style="padding-left:11px;">
 				    			<label>You can delete all cache files</label><br>
-				    			<label>Target folder</label> <b><?php echo $this->getWpContentDir(); ?>/cache/all</b>
+				    			<label>Target folder</label> <b><?php echo $this->getWpContentDir("/cache/all"); ?></b>
 				    			</div>
 				    		</div>
 				   		</form>
@@ -1362,9 +1409,8 @@
 				    			<div style="padding-left:11px;">
 				    			<label>If you modify any css file, you have to delete minified css files</label><br>
 				    			<label>All cache files will be removed as well</label><br>
-				    			<label>Target folder</label> <b><?php echo $this->getWpContentDir(); ?>/cache/all</b><br>
-				    			<!-- <label>Target folder</label> <b><?php echo $this->getWpContentDir(); ?>/cache/wpfc-mobile-cache</b><br> -->
-				    			<label>Target folder</label> <b><?php echo $this->getWpContentDir(); ?>/cache/wpfc-minified</b>
+				    			<label>Target folder</label> <b><?php echo $this->getWpContentDir("/cache/all"); ?></b><br>
+				    			<label>Target folder</label> <b><?php echo $this->getWpContentDir("/cache/wpfc-minified"); ?></b>
 				    			</div>
 				    		</div>
 				   		</form>

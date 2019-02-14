@@ -11,14 +11,14 @@
  * @since 2.0.0
  */
 function tptn_add_image_sizes() {
-	global $tptn_settings;
+	$thumb_size = tptn_get_option( 'thumb_size' );
 
-	if ( ! in_array( $tptn_settings['thumb_size'], get_intermediate_image_sizes() ) ) {
-		$tptn_settings['thumb_size'] = 'tptn_thumbnail';
+	if ( ! in_array( $thumb_size, get_intermediate_image_sizes() ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
+		$thumb_size = 'tptn_thumbnail';
 	}
 
 	// Add image sizes if 'tptn_thumbnail' is selected or the selected thumbnail size is no longer valid.
-	if ( 'tptn_thumbnail' === tptn_get_option( 'thumb_size' ) ) {
+	if ( 'tptn_thumbnail' === $thumb_size && tptn_get_option( 'thumb_create_sizes' ) ) {
 		$width  = tptn_get_option( 'thumb_width', 150 );
 		$height = tptn_get_option( 'thumb_height', 150 );
 		$crop   = tptn_get_option( 'thumb_crop', true );
@@ -95,7 +95,7 @@ function tptn_get_the_post_thumbnail( $args = array() ) {
 		if ( $postimage ) {
 			$postimage_id = tptn_get_attachment_id_from_url( $postimage );
 
-			if ( false != wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) {
+			if ( false != wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 				$postthumb = wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) );
 				$postimage = $postthumb[0];
 			}
@@ -105,7 +105,7 @@ function tptn_get_the_post_thumbnail( $args = array() ) {
 
 	// If there is no thumbnail found, check the post thumbnail.
 	if ( ! $postimage ) {
-		if ( false != get_post_thumbnail_id( $result->ID ) ) {
+		if ( false != get_post_thumbnail_id( $result->ID ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 			$postthumb = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ), array( $args['thumb_width'], $args['thumb_height'] ) );
 			$postimage = $postthumb[0];
 		}
@@ -122,7 +122,7 @@ function tptn_get_the_post_thumbnail( $args = array() ) {
 		if ( $postimage ) {
 			$postimage_id = tptn_get_attachment_id_from_url( $postimage );
 
-			if ( false != wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) {
+			if ( false != wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 				$postthumb = wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) );
 				$postimage = $postthumb[0];
 			}
@@ -189,35 +189,41 @@ function tptn_get_the_post_thumbnail( $args = array() ) {
 			$postimage = preg_replace( '~http://~', 'https://', $postimage );
 		}
 
-		if ( 'css' == $args['thumb_html'] ) {
-			$thumb_html = 'style="max-width:' . $args['thumb_width'] . 'px;max-height:' . $args['thumb_height'] . 'px;"';
-		} elseif ( 'html' == $args['thumb_html'] ) {
-			$thumb_html = 'width="' . $args['thumb_width'] . '" height="' . $args['thumb_height'] . '"';
-		} else {
-			$thumb_html = '';
-		}
-
-		/**
-		 * Filters the thumbnail HTML and allows a filter function to add any more HTML if needed.
-		 *
-		 * @since   2.2.0
-		 *
-		 * @param   string  $thumb_html Thumbnail HTML
-		 */
-		$thumb_html = apply_filters( 'tptn_thumb_html', $thumb_html );
-
 		$class = $args['class'] . ' tptn_' . $pick;
 
 		/**
 		 * Filters the thumbnail classes and allows a filter function to add any more classes if needed.
 		 *
-		 * @since   2.2.0
+		 * @since 2.2.0
 		 *
-		 * @param   string  $thumb_html Thumbnail HTML
+		 * @param string $class Thumbnail Class
 		 */
-		$class = apply_filters( 'tptn_thumb_class', $class );
+		$attr['class'] = apply_filters( 'tptn_thumb_class', $class );
 
-		$output .= '<img src="' . $postimage . '" alt="' . $post_title . '" title="' . $post_title . '" ' . $thumb_html . ' class="' . $class . '" />';
+		/**
+		 * Filters the thumbnail alt.
+		 *
+		 * @since 2.6.0
+		 *
+		 * @param string $post_title Thumbnail alt attribute
+		 */
+		$attr['alt'] = apply_filters( 'tptn_thumb_alt', $post_title );
+
+		/**
+		 * Filters the thumbnail title.
+		 *
+		 * @since 2.6.0
+		 *
+		 * @param string $post_title Thumbnail title attribute
+		 */
+		$attr['title'] = apply_filters( 'tptn_thumb_title', $post_title );
+
+		$attr['thumb_html']   = $args['thumb_html'];
+		$attr['thumb_width']  = $args['thumb_width'];
+		$attr['thumb_height'] = $args['thumb_height'];
+
+		$output .= tptn_get_image_html( $postimage, $attr );
+
 	}
 
 	/**
@@ -232,22 +238,133 @@ function tptn_get_the_post_thumbnail( $args = array() ) {
 	return apply_filters( 'tptn_get_the_post_thumbnail', $output, $args, $postimage );
 }
 
+/**
+ * Get an HTML img element
+ *
+ * @since 2.6.0
+ *
+ * @param string $attachment_url Image URL.
+ * @param array  $attr Attributes for the image markup.
+ * @return string HTML img element or empty string on failure.
+ */
+function tptn_get_image_html( $attachment_url, $attr = array() ) {
+
+	// If there is no url, return.
+	if ( '' == $attachment_url ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+		return;
+	}
+
+	$default_attr = array(
+		'src'          => $attachment_url,
+		'thumb_html'   => tptn_get_option( 'thumb_html', 'html' ),
+		'thumb_width'  => tptn_get_option( 'thumb_width', 150 ),
+		'thumb_height' => tptn_get_option( 'thumb_height', 150 ),
+	);
+
+	$attr = wp_parse_args( $attr, $default_attr );
+
+	$hwstring = tptn_get_image_hwstring( $attr );
+
+	// Generate 'srcset' and 'sizes' if not already present.
+	if ( empty( $attr['srcset'] ) ) {
+		$attachment_id = tptn_get_attachment_id_from_url( $attachment_url );
+		$image_meta    = wp_get_attachment_metadata( $attachment_id );
+
+		if ( is_array( $image_meta ) ) {
+			$size_array = array( absint( $attr['thumb_width'] ), absint( $attr['thumb_height'] ) );
+			$srcset     = wp_calculate_image_srcset( $size_array, $attachment_url, $image_meta, $attachment_id );
+			$sizes      = wp_calculate_image_sizes( $size_array, $attachment_url, $image_meta, $attachment_id );
+
+			if ( $srcset && ( $sizes || ! empty( $attr['sizes'] ) ) ) {
+				$attr['srcset'] = $srcset;
+
+				if ( empty( $attr['sizes'] ) ) {
+					$attr['sizes'] = $sizes;
+				}
+			}
+		}
+	}
+
+	// Unset attributes we don't want to display.
+	unset( $attr['thumb_html'] );
+	unset( $attr['thumb_width'] );
+	unset( $attr['thumb_height'] );
+
+	/**
+	 * Filters the list of attachment image attributes.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @param array  $attr Attributes for the image markup.
+	 * @param string $attachment_url Image URL.
+	 */
+	$attr = apply_filters( 'tptn_get_image_attributes', $attr, $attachment_url );
+	$attr = array_map( 'esc_attr', $attr );
+
+	$html = '<img ' . $hwstring;
+	foreach ( $attr as $name => $value ) {
+		$html .= " $name=" . '"' . $value . '"';
+	}
+	$html .= ' />';
+
+	return apply_filters( 'tptn_get_image_html', $html );
+}
+
+
+/**
+ * Retrieve width and height attributes using given width and height values.
+ *
+ * @since 2.6.0
+ *
+ * @param array $args Argument array.
+ *
+ * @return string Height-width string.
+ */
+function tptn_get_image_hwstring( $args = array() ) {
+
+	$default_args = array(
+		'thumb_html'   => tptn_get_option( 'thumb_html', 'html' ),
+		'thumb_width'  => tptn_get_option( 'thumb_width', 150 ),
+		'thumb_height' => tptn_get_option( 'thumb_height', 150 ),
+	);
+
+	$args = wp_parse_args( $args, $default_args );
+
+	if ( 'css' === $args['thumb_html'] ) {
+		$thumb_html = ' style="max-width:' . $args['thumb_width'] . 'px;max-height:' . $args['thumb_height'] . 'px;" ';
+	} elseif ( 'html' === $args['thumb_html'] ) {
+		$thumb_html = ' width="' . $args['thumb_width'] . '" height="' . $args['thumb_height'] . '" ';
+	} else {
+		$thumb_html = '';
+	}
+
+	/**
+	 * Filters the thumbnail HTML and allows a filter function to add any more HTML if needed.
+	 *
+	 * @since   2.2.0
+	 *
+	 * @param string $thumb_html Thumbnail HTML.
+	 * @param array  $args       Argument array.
+	 */
+	return apply_filters( 'tptn_thumb_html', $thumb_html, $args );
+}
+
 
 /**
  * Get the first child image in the post.
  *
  * @since   1.9.8
- * @param   mixed $postID Post ID.
+ * @param   mixed $postid Post ID.
  * @param   int   $thumb_width Thumb width.
  * @param   int   $thumb_height Thumb height.
  * @return  string  Location of thumbnail
  */
-function tptn_get_first_image( $postID, $thumb_width, $thumb_height ) {
+function tptn_get_first_image( $postid, $thumb_width, $thumb_height ) {
 	$args = array(
 		'numberposts'    => 1,
 		'order'          => 'ASC',
 		'post_mime_type' => 'image',
-		'post_parent'    => $postID,
+		'post_parent'    => $postid,
 		'post_status'    => null,
 		'post_type'      => 'attachment',
 	);
@@ -264,7 +381,7 @@ function tptn_get_first_image( $postID, $thumb_width, $thumb_height ) {
 			 * @since   1.9.10.1
 			 *
 			 * @param   array   $image_attributes[0]    URL of the image
-			 * @param   int     $postID                 Post ID
+			 * @param   int     $postid                 Post ID
 			 */
 			return apply_filters( 'tptn_get_first_image', $image_attributes[0] );
 		}
@@ -288,7 +405,7 @@ function tptn_get_attachment_id_from_url( $attachment_url = '' ) {
 	$attachment_id = false;
 
 	// If there is no url, return.
-	if ( '' == $attachment_url ) {
+	if ( '' == $attachment_url ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		return;
 	}
 
@@ -305,7 +422,7 @@ function tptn_get_attachment_id_from_url( $attachment_url = '' ) {
 		$attachment_url = str_replace( $upload_dir_paths['baseurl'] . '/', '', $attachment_url );
 
 		// Finally, run a custom database query to get the attachment ID from the modified attachment URL.
-		$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = %s AND wposts.post_type = 'attachment'", $attachment_url ) );
+		$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = %s AND wposts.post_type = 'attachment'", $attachment_url ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 	}
 
@@ -339,12 +456,12 @@ function tptn_get_thumb_size( $args ) {
 		$thumb_height = $tptn_thumb_size['height'];
 	}
 
-	if ( empty( $thumb_width ) || ( $args['is_widget'] && $thumb_width != $args['thumb_width'] ) ) {
+	if ( empty( $thumb_width ) || ( $args['is_widget'] && $thumb_width != $args['thumb_width'] ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		$thumb_width        = $args['thumb_width'];
 		$args['thumb_html'] = 'css';
 	}
 
-	if ( empty( $thumb_height ) || ( $args['is_widget'] && $thumb_height != $args['thumb_height'] ) ) {
+	if ( empty( $thumb_height ) || ( $args['is_widget'] && $thumb_height != $args['thumb_height'] ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		$thumb_height       = $args['thumb_height'];
 		$args['thumb_html'] = 'css';
 	}
@@ -378,14 +495,14 @@ function tptn_get_all_image_sizes( $size = '' ) {
 	$intermediate_image_sizes = get_intermediate_image_sizes();
 
 	foreach ( $intermediate_image_sizes as $_size ) {
-		if ( in_array( $_size, array( 'thumbnail', 'medium', 'large' ) ) ) {
+		if ( in_array( $_size, array( 'thumbnail', 'medium', 'large' ) ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 
 			$sizes[ $_size ]['name']   = $_size;
 			$sizes[ $_size ]['width']  = get_option( $_size . '_size_w' );
 			$sizes[ $_size ]['height'] = get_option( $_size . '_size_h' );
 			$sizes[ $_size ]['crop']   = (bool) get_option( $_size . '_crop' );
 
-			if ( ( 0 == $sizes[ $_size ]['width'] ) && ( 0 == $sizes[ $_size ]['height'] ) ) {
+			if ( ( 0 == $sizes[ $_size ]['width'] ) && ( 0 == $sizes[ $_size ]['height'] ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 				unset( $sizes[ $_size ] );
 			}
 		} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {

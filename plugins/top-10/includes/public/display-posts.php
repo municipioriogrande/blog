@@ -22,7 +22,7 @@ function tptn_pop_posts( $args ) {
 	global $tptn_settings;
 
 	// if set, save $exclude_categories.
-	if ( isset( $args['exclude_categories'] ) && '' != $args['exclude_categories'] ) { // WPCS: loose comparison ok.
+	if ( isset( $args['exclude_categories'] ) && '' != $args['exclude_categories'] ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		$exclude_categories   = explode( ',', $args['exclude_categories'] );
 		$args['strict_limit'] = false;
 	}
@@ -127,7 +127,7 @@ function tptn_pop_posts( $args ) {
 			$resultid = tptn_object_id_cur_lang( $result->ID );
 
 			// If this is NULL or already processed ID or matches current post then skip processing this loop.
-			if ( ! $resultid || in_array( $resultid, $processed_results ) ) {
+			if ( ! $resultid || in_array( $resultid, $processed_results ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 				continue;
 			}
 
@@ -154,7 +154,7 @@ function tptn_pop_posts( $args ) {
 
 				$p_in_c = false;    // Variable to check if post exists in a particular category.
 				foreach ( $categorys as $cat ) {    // Loop to check if post exists in excluded category.
-					$p_in_c = ( in_array( $cat->cat_ID, $exclude_categories ) ) ? true : false;
+					$p_in_c = ( in_array( $cat->cat_ID, $exclude_categories ) ) ? true : false; // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 					if ( $p_in_c ) {
 						break; // Skip loop execution and go to the next step.
 					}
@@ -173,7 +173,7 @@ function tptn_pop_posts( $args ) {
 			}
 
 			if ( $args['show_date'] ) {
-				$output .= '<span class="tptn_date"> ' . mysql2date( get_option( 'date_format', 'd/m/y' ), $result->post_date ) . '</span> ';
+				$output .= '<span class="tptn_date"> ' . tptn_date( $args, $result ) . '</span> ';
 			}
 
 			if ( $args['show_excerpt'] ) {
@@ -182,29 +182,16 @@ function tptn_pop_posts( $args ) {
 
 			if ( $args['disp_list_count'] ) {
 
-				$tptn_list_count = '(' . number_format_i18n( $sum_count ) . ')';
-
-				/**
-				 * Filter the formatted list count text.
-				 *
-				 * @since   2.1.0
-				 *
-				 * @param   string  $tptn_list_count    Formatted list count
-				 * @param   int     $sum_count          Post count
-				 * @param   object  $result             Post object
-				 */
-				$tptn_list_count = apply_filters( 'tptn_list_count', $tptn_list_count, $sum_count, $result );
-
-				$output .= ' <span class="tptn_list_count">' . $tptn_list_count . '</span>';
+				$output .= ' <span class="tptn_list_count">' . tptn_list_count( $args, $result, $sum_count ) . '</span>';
 			}
 
 			$tptn_list = '';
 			/**
-			 * Filter Formatted list item with link and and thumbnail.
+			 * Filter to add content to the end of each item in the list.
 			 *
 			 * @since   2.2.0
 			 *
-			 * @param   string  $tptn_list
+			 * @param   string  $tptn_list Empty string at the end of each list item.
 			 * @param   object  $result Object of the current post result
 			 * @param   array   $args   Array of arguments
 			 */
@@ -340,15 +327,7 @@ function get_tptn_pop_posts( $args = array() ) {
 
 	$blog_id = get_current_blog_id();
 
-	if ( $args['daily_midnight'] ) {
-		$current_time = current_time( 'timestamp', 0 );
-		$from_date    = $current_time - ( max( 0, ( $args['daily_range'] - 1 ) ) * DAY_IN_SECONDS );
-		$from_date    = gmdate( 'Y-m-d 0', $from_date );
-	} else {
-		$current_time = current_time( 'timestamp', 0 );
-		$from_date    = $current_time - ( $args['daily_range'] * DAY_IN_SECONDS + $args['hour_range'] * HOUR_IN_SECONDS );
-		$from_date    = gmdate( 'Y-m-d H', $from_date );
-	}
+	$from_date = tptn_get_from_date( null, $args['daily_range'], $args['hour_range'] );
 
 	/**
 	 *
@@ -357,21 +336,21 @@ function get_tptn_pop_posts( $args = array() ) {
 	 */
 
 	// Fields to return.
-	$fields[] = 'ID';
-	$fields[] = 'postnumber';
-	$fields[] = ( $args['daily'] ) ? 'SUM(cntaccess) as sum_count' : 'cntaccess as sum_count';
+	$fields[] = "{$table_name}.postnumber";
+	$fields[] = ( $args['daily'] ) ? "SUM({$table_name}.cntaccess) as sum_count" : "{$table_name}.cntaccess as sum_count";
+	$fields[] = "{$wpdb->posts}.ID";
 
 	$fields = implode( ', ', $fields );
 
 	// Create the JOIN clause.
-	$join = " INNER JOIN {$wpdb->posts} ON postnumber=ID ";
+	$join = " INNER JOIN {$wpdb->posts} ON {$table_name}.postnumber={$wpdb->posts}.ID ";
 
 	// Create the base WHERE clause.
-	$where .= $wpdb->prepare( ' AND blog_id = %d ', $blog_id );             // Posts need to be from the current blog only.
-	$where .= " AND ($wpdb->posts.post_status = 'publish' OR $wpdb->posts.post_status = 'inherit') ";   // Show published posts and attachments.
+	$where .= $wpdb->prepare( " AND {$table_name}.blog_id = %d ", $blog_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$where .= " AND ({$wpdb->posts}.post_status = 'publish' OR {$wpdb->posts}.post_status = 'inherit') ";   // Show published posts and attachments.
 
 	if ( $args['daily'] ) {
-		$where .= $wpdb->prepare( ' AND dp_date >= %s ', $from_date );    // Only fetch posts that are tracked after this date.
+		$where .= $wpdb->prepare( " AND {$table_name}.dp_date >= %s ", $from_date ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	// Convert exclude post IDs string to array so it can be filtered.
@@ -387,7 +366,7 @@ function get_tptn_pop_posts( $args = array() ) {
 	// Convert it back to string.
 	$exclude_post_ids = implode( ',', array_filter( $exclude_post_ids ) );
 
-	if ( '' != $exclude_post_ids ) { // WPCS: loose comparison ok.
+	if ( '' != $exclude_post_ids ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		$where .= " AND $wpdb->posts.ID NOT IN ({$exclude_post_ids}) ";
 	}
 	$where .= " AND $wpdb->posts.post_type IN ('" . join( "', '", $post_types ) . "') ";    // Array of post types.
@@ -460,7 +439,7 @@ function get_tptn_pop_posts( $args = array() ) {
 	$sql = "SELECT DISTINCT $fields FROM {$table_name} $join WHERE 1=1 $where $groupby $orderby $limits";
 
 	if ( $args['posts_only'] ) {    // Return the array of posts only if the variable is set.
-		$results = $wpdb->get_results( $sql, ARRAY_A ); // WPCS: unprepared SQL OK.
+		$results = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 
 		/**
 		 * Filter the array of top post IDs.
@@ -473,7 +452,7 @@ function get_tptn_pop_posts( $args = array() ) {
 		return apply_filters( 'tptn_pop_posts_array', $results, $args );
 	}
 
-	$results = $wpdb->get_results( $sql ); // WPCS: unprepared SQL OK.
+	$results = $wpdb->get_results( $sql ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 
 	/**
 	 * Filter object containing post IDs of popular posts
@@ -501,7 +480,7 @@ function tptn_show_pop_posts( $args = null ) {
 		$args .= '&is_manual=1';
 	}
 
-	echo tptn_pop_posts( $args ); // WPCS: XSS OK.
+	echo tptn_pop_posts( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
