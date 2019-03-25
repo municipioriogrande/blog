@@ -15,7 +15,7 @@ $social_links = array(
 	
 
 	'email' => 'mailto:?subject='.esc_html( get_the_title() ).'&body='.esc_url( get_the_permalink() ),
-	'whatsapp' => 'whatsapp://send?text=' . esc_html( get_the_title() ) . ' ' . esc_html( get_the_title() ),
+	'whatsapp' => 'whatsapp://send?text=' . esc_html( get_the_title() ) . ' ' . esc_html( get_the_permalink() ),
 	'linkedin' => 'https://www.linkedin.com/shareArticle?mini=true&url='.esc_url( get_the_permalink() ).'&title='.esc_html( get_the_title() ),
 	'print' => 'javascript:if(window.print)window.print()',
 	
@@ -65,7 +65,7 @@ $social_sharing_list .= '</ul>';
 						<?php endif; ?>
 
 						<h1 class="title p-name entry-title" itemprop="headline">
-							<a href="<?php the_permalink(); ?>" class="u-url" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+							<a href="<?php the_permalink(); ?>" class="u-url"><?php the_title(); ?></a>
 						</h1>
 
 						<?php rgblog_post_thumbnail("large"); ?>
