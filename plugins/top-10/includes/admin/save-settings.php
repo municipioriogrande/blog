@@ -109,11 +109,11 @@ function tptn_settings_sanitize( $input = array() ) {
 		if ( ! isset( $input[ $key ] ) ) {
 			unset( $output[ $key ] );
 		}
-	}
 
-	// Delete any settings that are no longer part of our registered settings.
-	if ( array_key_exists( $key, $output ) && ! array_key_exists( $key, $settings_types ) ) {
-		unset( $output[ $key ] );
+		// Delete any settings that are no longer part of our registered settings.
+		if ( array_key_exists( $key, $output ) && ! array_key_exists( $key, $settings_types ) ) {
+			unset( $output[ $key ] );
+		}
 	}
 
 	add_settings_error( 'tptn-notices', '', __( 'Settings updated.', 'top-10' ), 'updated' );
@@ -288,9 +288,9 @@ add_filter( 'tptn_settings_sanitize_posttypes', 'tptn_sanitize_posttypes_field' 
  */
 function tptn_sanitize_exclude_cat( $settings ) {
 
-	if ( ! empty( $settings['exclude_cat_slugs'] ) ) {
+	if ( isset( $settings['exclude_cat_slugs'] ) ) {
 
-		$exclude_cat_slugs = explode( ',', $settings['exclude_cat_slugs'] );
+		$exclude_cat_slugs = array_unique( explode( ',', $settings['exclude_cat_slugs'] ) );
 
 		foreach ( $exclude_cat_slugs as $cat_name ) {
 			$cat = get_term_by( 'name', $cat_name, 'category' );

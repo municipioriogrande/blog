@@ -39,10 +39,10 @@ function tptn_object_id_cur_lang( $post_id ) {
 
 	if ( function_exists( 'pll_get_post' ) ) {
 		$post_id = pll_get_post( $post_id );
-	} elseif ( function_exists( 'wpml_object_id_filter' ) ) {
-		$post_id = wpml_object_id_filter( $post_id, 'any', $return_original_if_missing );
+	} elseif ( function_exists( 'wpml_object_id' ) ) {
+		$post_id = apply_filters( 'wpml_object_id', $post_id, get_post_type( $post_id ), $return_original_if_missing );
 	} elseif ( function_exists( 'icl_object_id' ) ) {
-		$post_id = icl_object_id( $post_id, 'any', $return_original_if_missing );
+		$post_id = icl_object_id( $post_id, get_post_type( $post_id ), $return_original_if_missing );
 	}
 
 	/**

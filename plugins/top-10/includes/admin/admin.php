@@ -219,9 +219,39 @@ function tptn_adminhead() {
 				});
 			});
 
-			$('.datepicker').datepicker({
-				dateFormat: 'd M yy'
-			});
+			$( function() {
+				var dateFormat = 'dd M yy',
+				from = $( "#datepicker-from" )
+					.datepicker({
+						changeMonth: true,
+						maxDate: 0,
+						dateFormat: dateFormat
+					})
+					.on( "change", function() {
+						to.datepicker( "option", "minDate", getDate( this ) );
+					}),
+				to = $( "#datepicker-to" )
+					.datepicker({
+						changeMonth: true,
+						maxDate: 0,
+						dateFormat: dateFormat
+					})
+					.on( "change", function() {
+						from.datepicker( "option", "maxDate", getDate( this ) );
+					});
+
+				function getDate( element ) {
+					var date;
+					try {
+						date = $.datepicker.parseDate( dateFormat, element.value );
+					} catch( error ) {
+						date = null;
+					}
+
+					return date;
+				}
+			} );
+
 
 
 		});
@@ -333,7 +363,7 @@ function tptn_plugin_actions_links( $links ) {
 
 	return array_merge(
 		array(
-			'settings' => '<a href="' . admin_url( 'options-general.php?page=tptn_options_page' ) . '">' . __( 'Settings', 'top-10' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=tptn_options_page' ) . '">' . __( 'Settings', 'top-10' ) . '</a>',
 		),
 		$links
 	);

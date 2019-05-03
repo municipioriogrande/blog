@@ -6,13 +6,17 @@
  */
 
 /**
- * Class WPSEO_Sitemaps
+ * Class WPSEO_Sitemaps.
  *
  * @todo This class could use a general description with some explanation on sitemaps. OR.
  */
 class WPSEO_Sitemaps {
 
-	/** Sitemap index identifier. */
+	/**
+	 * Sitemap index identifier.
+	 *
+	 * @var string
+	 */
 	const SITEMAP_INDEX_TYPE = '1';
 
 	/**
@@ -86,7 +90,7 @@ class WPSEO_Sitemaps {
 	public $providers;
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 */
 	public function __construct() {
 
@@ -129,7 +133,7 @@ class WPSEO_Sitemaps {
 	}
 
 	/**
-	 * Check the current request URI, if we can determine it's probably an XML sitemap, kill loading the widgets
+	 * Check the current request URI, if we can determine it's probably an XML sitemap, kill loading the widgets.
 	 */
 	public function reduce_query_load() {
 
@@ -176,7 +180,7 @@ class WPSEO_Sitemaps {
 	}
 
 	/**
-	 * Set the sitemap current page to allow creating partial sitemaps with wp-cli
+	 * Set the sitemap current page to allow creating partial sitemaps with WP-CLI
 	 * in a one-off process.
 	 *
 	 * @param integer $current_page The part that should be generated.
@@ -266,7 +270,7 @@ class WPSEO_Sitemaps {
 	}
 
 	/**
-	 * Try to get the sitemap from cache
+	 * Try to get the sitemap from cache.
 	 *
 	 * @param string $type        Sitemap type.
 	 * @param int    $page_number The page number to retrieve.
