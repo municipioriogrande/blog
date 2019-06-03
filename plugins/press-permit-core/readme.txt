@@ -1,10 +1,10 @@
 === Press Permit Core ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins
-Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
+Tags: restrict, access, groups, supplemental role, category permissions, page permissions
 Requires at least: 4.7
 Requires PHP: 5.4
-Tested up to: 5.1
-Stable tag: 2.6.1
+Tested up to: 5.2
+Stable tag: 2.6.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -49,6 +49,12 @@ Pro [extensions](https://presspermit.com/extensions) are [available](https://pre
 Initial production release
 
 == Changelog ==
+
+= 2.6.3 - 3 May 2019 =
+* Compat : PublishPress - Use new menu icon for Permissions menu (otherwise extra menu icon pushed down to next item)
+
+= 2.6.2 - 2 May 2019 =
+* Compat : Pro (Revisionary) - Page Edit exception did not enable edit or approval of Pending / Scheduled revisions of the page (also requires PP Collaborative Editing Pack 2.5.8)
 
 = 2.6.1 - 22 Feb 2019 =
 * Fixed : PHP Notice on Plugins > Add New

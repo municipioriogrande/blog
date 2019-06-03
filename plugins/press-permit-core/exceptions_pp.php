@@ -91,13 +91,13 @@ class PP_Exceptions {
 			
 			// facilitates user-add on post edit form without dealing with status caps
 			$in_clause = "IN ('" . implode( "','", $_ids ) . "')";
-			$additions[$_status][] = apply_filters( 'pp_additions_clause', "$src_table.ID $in_clause", $required_operation, $post_type, array( 'via_item_source' => 'post', 'status' => $_status, 'in_clause' => $in_clause, 'src_table' => $src_table ) );
+			$additions[$_status][] = apply_filters( 'pp_additions_clause', "$src_table.ID $in_clause", $required_operation, $post_type, array( 'via_item_source' => 'post', 'via_item_type' => $exc_post_type, 'status' => $_status, 'in_clause' => $in_clause, 'src_table' => $src_table, 'ids' => $_ids ) );
 		}
 		
 		$additional_ttids = array();
 		foreach( pp_get_enabled_taxonomies( array( 'object_type' => $post_type ) ) as $taxonomy ) {
 			$tt_ids = $pp_current_user->get_exception_terms( $required_operation, 'additional', $post_type, $taxonomy, array( 'status' => true, 'merge_universals' => true ) );
-
+			
 			// merge this taxonomy exceptions with other taxonomies
 			foreach( array_keys($tt_ids) as $_status ) {
 				if ( ! isset( $additional_ttids[$_status] ) )
@@ -120,7 +120,7 @@ class PP_Exceptions {
 					$additions[$_status] = array();
 			
 				$in_clause = "IN ( SELECT object_id FROM $wpdb->term_relationships WHERE term_taxonomy_id IN ('" . implode( "','", $_ttids ) . "') )";
-				$additions[$_status][] = apply_filters( 'pp_additions_clause', "$src_table.ID $in_clause", $required_operation, $post_type, array( 'via_item_source' => 'term', 'status' => $_status, 'in_clause' => $in_clause, 'src_table' => $src_table ) );
+				$additions[$_status][] = apply_filters( 'pp_additions_clause', "$src_table.ID $in_clause", $required_operation, $post_type, array( 'via_item_source' => 'term', 'status' => $_status, 'in_clause' => $in_clause, 'src_table' => $src_table, 'ids' => $_ttids ) );
 			}
 		}
 		

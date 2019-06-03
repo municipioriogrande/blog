@@ -53,6 +53,13 @@ class PP_PostSave {
 		if ( ! $post_obj )
 			$post_obj = get_post($post_id);
 		
+		if ( empty($post_obj) ) {  // Revisionary: pending revision submission with WPML active
+			global $wp_query;
+			if ( empty($wp_query->queried_object) ) {
+				return false;	
+			}
+		}
+		
 		return ( 'auto-draft' == $post_obj->post_status )
 			|| empty( $pp_admin_filters->last_post_status[$post_id] ) 
 			|| ( 'auto-draft' == $pp_admin_filters->last_post_status[$post_id] )

@@ -41,8 +41,8 @@ class PP_GroupsUpdate {
 			$data['user_id'] = $user_id;
 			
 			if ( $already_member = $wpdb->get_col( $wpdb->prepare( "SELECT user_id FROM $members_table WHERE group_id = %d AND user_id = %d", $group_id, $user_id ) ) ) {
-				$data = array( 'status' => $status );
-				$wpdb->update( $members_table, $data, array( 'group_id' => $group_id, 'user_id' => $user_id ) );
+				self::update_group_user($group_id, $user_ids, $args);
+				return;
 			} else {
 				$data['add_date_gmt'] = current_time( 'mysql', 1 );
 				$wpdb->insert( $members_table, $data );
