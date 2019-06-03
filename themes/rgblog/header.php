@@ -17,6 +17,14 @@
 	<?php wp_head(); ?>
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	<?php
+	$google_analytics_file = get_template_directory() . '/js/googleanalytics.html';
+	
+	if ( file_exists($google_analytics_file)  ) {
+		include $google_analytics_file;
+	}
+	?>
+
 </head>
 
 <body <?php body_class(); ?>>
@@ -30,11 +38,11 @@
 			
 				<?php if ( in_array( 'single-edlt', get_body_class() ) || in_array( 'post-type-archive-edlt', get_body_class() ) ) :?>
 				<a href="<?php echo esc_url( home_url('/') ); ?>edlt">
-					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/edlt-logo.png" alt="Logo" class="logo-img">
+					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/edlt-logo.png" alt="Noticias del Espacio del Desarrollo Laboral y Tecnológico" class="logo-img">
 				</a>
 				<?php else:?>
 				<a href="<?php echo esc_url( home_url('/') ); ?>">
-					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/logo.png" alt="Logo" class="logo-img">
+					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/logo.png" alt="Noticias del Municipio de Río Grande" class="logo-img">
 				</a>
 				<?php endif;?>
 			</div>
