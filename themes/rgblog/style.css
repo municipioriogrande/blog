@@ -942,6 +942,26 @@ object {
   display: block;
 }
 
+.alignwide {
+  margin-left: -80px;
+  margin-right: -80px;
+}
+
+.alignfull {
+  margin-left: calc( -100vw / 2 + 100% / 2 );
+  margin-right: calc( -100vw / 2 + 100% / 2 );
+  max-width: 100vw;
+  width: 99.7vw;
+}
+
+.alignfull img {
+  width: 100vw;
+}
+
+.alignfull .wp-block-column .wp-block-image img {
+  width: auto;
+}
+
 .effect-enlarge-shadow:hover {
   -webkit-transform: scale(1.015);
   -ms-transform: scale(1.015);
@@ -2270,6 +2290,154 @@ body.page .has-form .wpcf7-response-output {
 }
 body.page .has-form .small-text {
   font-size: 0.7em;
+}
+
+body.page-template-tpl-hubspot {
+  font-family: "Muli", sans-serif;
+}
+body.page-template-tpl-hubspot .hentry {
+  font-size: 1.2em;
+}
+body.page-template-tpl-hubspot a.btn {
+  display: inline-block;
+  background-color: #fff;
+  padding: 1em 1.4em;
+  border: 2px solid #ff6a00;
+  border-bottom-color: #ff6a00;
+  text-transform: uppercase;
+  color: #ff6a00 !important;
+  border-radius: 6px;
+  line-height: 1em;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+  transition: 0.4s;
+}
+body.page-template-tpl-hubspot a.btn:hover {
+  background-color: #ff6a00;
+  color: #fff !important;
+  text-decoration: none;
+  border-bottom-color: #ff6a00;
+}
+body.page-template-tpl-hubspot img {
+  border-radius: 10px;
+}
+body.page-template-tpl-hubspot .background-grey {
+  background-color: #f0f0f0;
+}
+body.page-template-tpl-hubspot .gblock-header {
+  height: 90vh;
+  margin-bottom: 0;
+  padding-left: 6em;
+}
+body.page-template-tpl-hubspot .gblock-header h2 {
+  margin: 0;
+  background-color: #ff6a00;
+  color: #fff;
+  padding: 0.6em;
+  width: auto;
+  font-weight: 900;
+  font-size: 3.4em;
+  display: inline-block;
+  max-width: calc(100% - 4em);
+  word-wrap: break-word;
+  -webkit-margin-after: 0;
+  line-height: 1.4em;
+}
+body.page-template-tpl-hubspot .gblock-header .wp-block-cover__inner-container {
+  position: relative;
+}
+body.page-template-tpl-hubspot .gblock-header .subtitulo {
+  color: #fff;
+  position: absolute;
+  top: -64px;
+  font-size: 1.2em;
+  text-shadow: 1px 1px 6px #000;
+  font-weight: bold;
+}
+body.page-template-tpl-hubspot .row {
+  padding: 2em 7em;
+}
+body.page-template-tpl-hubspot .background-grey.has-2-columns p {
+  font-size: 1em;
+}
+body.page-template-tpl-hubspot .row-icons {
+  font-size: 1.1em;
+  text-align: center;
+}
+body.page-template-tpl-hubspot .row-icons ul {
+  margin-top: 3em;
+}
+body.page-template-tpl-hubspot .row-icons ul.inline {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+}
+body.page-template-tpl-hubspot .row-icons ul.inline li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body.page-template-tpl-hubspot .row-icons img.icon {
+  width: auto;
+  display: block;
+  width: 100px;
+  height: 100px;
+}
+body.page-template-tpl-hubspot .form-panel {
+  background-color: #f0f0f0;
+  padding: 25px;
+  border-radius: 10px;
+}
+body.page-template-tpl-hubspot .form-panel form label {
+  color: #666;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+body.page-template-tpl-hubspot .form-panel form p.row {
+  padding: 0;
+}
+body.page-template-tpl-hubspot .form-panel form p.row .wpcf7-form-control-wrap > input {
+  width: 100%;
+}
+body.page-template-tpl-hubspot .form-panel form p.row .wpcf7-form-control-wrap > label {
+  display: block;
+}
+body.page-template-tpl-hubspot .form-panel form input[type=submit] {
+  background-color: #fff;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  display: inline-block;
+  margin: 2% auto 0px;
+  padding: 9px 25px;
+  border: 2px solid #ff6a00;
+  border-radius: 5px;
+  color: #ff6a00;
+  font-size: 0.8em;
+  text-align: center;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  width: auto;
+  text-transform: uppercase;
+}
+body.page-template-tpl-hubspot .form-panel form input[type=submit]:hover {
+  color: #fff;
+  background-color: #ff6a00;
+}
+body.page-template-tpl-hubspot .form-panel form .wpcf7-checkbox .wpcf7-list-item {
+  width: 100%;
+}
+body.page-template-tpl-hubspot .form-panel form .wpcf7-checkbox .wpcf7-list-item > label {
+  width: 100%;
+  font-size: 0.8em;
+}
+body.page-template-tpl-hubspot .form-panel form .wpcf7-checkbox .wpcf7-list-item > input[type=checkbox] {
+  width: auto;
 }
 
 @media print {

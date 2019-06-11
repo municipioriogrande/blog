@@ -1225,3 +1225,187 @@ body.page .has-form {
 		font-size: 0.7em;
 	}
 }
+
+// transition page builder to gutenberg
+
+body.page-template-tpl-hubspot {
+	
+	font-family: "Muli",sans-serif;
+
+	.hentry {
+		font-size: 1.2em;
+	}
+
+	a.btn {
+		display: inline-block;
+		background-color: #fff;
+		padding: 1em 1.4em;
+		border: 2px solid $orange;
+		border-bottom-color: $orange;
+		text-transform: uppercase;
+		color: $orange !important;
+		border-radius: 6px;
+		line-height: 1em;
+		-webkit-transition: .4s;
+		-moz-transition: .4s;
+		-ms-transition: .4s;
+		-o-transition: .4s;
+		transition: .4s;
+
+		&:hover {
+			background-color: $orange;
+			color: #fff !important;
+			text-decoration: none;
+			border-bottom-color: $orange;
+		}
+	}
+
+	img {
+		border-radius: 10px;
+	}
+
+	.background-grey {
+		background-color: #f0f0f0;
+
+	}
+
+	.gblock-header {
+		//width: 100vw;
+		height: 90vh;
+		margin-bottom: 0;
+		padding-left: 6em;
+
+		h2 {
+			margin: 0;
+			background-color: $orange;
+			color: #fff;
+			padding: .6em;
+			width: auto;
+			font-weight: 900;
+			font-size: 3.4em;
+			display: inline-block;
+			max-width: calc(100% - 4em);
+			word-wrap: break-word;
+			-webkit-margin-after: 0;
+			line-height: 1.4em;
+		}
+
+		.wp-block-cover__inner-container {
+			position: relative;
+		}
+		.subtitulo {
+			color: #fff;
+			position: absolute;
+			top: -64px;
+			font-size: 1.2em;
+			text-shadow: 1px 1px 6px #000;
+			font-weight: bold;
+		}
+	}
+
+	.row {
+		padding: 2em 7em;
+	}
+
+	.background-grey.has-2-columns {
+		p {
+			font-size: 1.0em;
+		}
+	}
+
+	.row-icons {
+		font-size: 1.1em;
+		text-align: center;
+
+		ul {
+			margin-top: 3em;
+		}
+
+		ul.inline {
+			list-style-type: none;
+			display: flex;	
+			justify-content: space-around;
+
+			li {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+		}
+
+		img.icon {
+			width: auto;
+			display: block;
+			width: 100px;
+			height: 100px;
+		}
+	}
+
+	.form-panel {
+		background-color: #f0f0f0;
+		padding: 25px;
+		border-radius: 10px;
+
+		form {
+
+			label {
+				color: #666;
+				font-size: .8em;
+				font-weight: bold;
+			}
+			
+			p.row {
+				padding: 0;
+				
+				.wpcf7-form-control-wrap > input {
+					width: 100%;
+				}
+				
+				.wpcf7-form-control-wrap > label {
+					display: block;
+				}
+			}
+
+			input[type="submit"]{
+				background-color: #fff;
+				-webkit-transition: all .4s ease-in-out;
+				-moz-transition: all .4s ease-in-out;
+				-ms-transition: all .4s ease-in-out;
+				-o-transition: all .4s ease-in-out;
+				transition: all .4s ease-in-out;
+				display: inline-block;
+				margin: 2% auto 0px;
+				padding: 9px 25px;
+				border: 2px solid $orange;
+				border-radius: 5px;
+				color: $orange;
+				font-size: 0.8em;
+				text-align: center;
+				line-height: inherit;
+				text-decoration: none;
+				cursor: pointer;
+				width: auto;
+				text-transform: uppercase;
+
+				&:hover {
+					color: #fff;
+					background-color: $orange;
+				}
+			}
+
+			.wpcf7-checkbox .wpcf7-list-item {
+				width: 100%;
+				
+				& > label {
+					width: 100%;
+					font-size: .8em;
+				}
+
+				& > input[type="checkbox"] {
+					width: auto;
+			  }
+
+		  }
+		}
+	}
+}

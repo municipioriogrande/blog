@@ -17,9 +17,9 @@
 		<div class="columns">
 			<div class="logo">
 				<?php if ( in_array( 'single-edlt', get_body_class() )  ||  in_array( 'post-type-archive-edlt', get_body_class() ) ) :?>
-				<a href="//www.riogrande.gob.ar/"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/edlt-logo_footer.png" alt="Logo" class="logo-img"></a>
+				<a href="//www.riogrande.gob.ar/"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/edlt-logo_footer.png" alt="Noticias del Espacio del Desarrollo Laboral y Tecnológico" class="logo-img"></a>
 				<?php else:?>
-				<a href="//www.riogrande.gob.ar/"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/logo_footer.png" alt="Logo" class="logo-img"></a>
+				<a href="//www.riogrande.gob.ar/"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/logo_footer.png" alt="Noticias del Municipio de Río Grande" class="logo-img"></a>
 				<?php endif;?>
 			</div>
 			<div>
@@ -44,7 +44,7 @@
 			</div>
 			<div class="col-right">
 				<!--<a href="#">Leer noticias mas viejas</a>-->
-				<a href="#top" class="back-to-top"><span>Volver arriba</span></a>
+				<a href="#content" class="back-to-top"><span>Volver arriba</span></a>
 			</div>
 		</div>
 
@@ -53,16 +53,6 @@
 
 <?php wp_footer(); ?>
 
-
-<!-- analytics 
-<script>
-(function(f,i,r,e,s,h,l){i['GoogleAnalyticsObject']=s;f[s]=f[s]||function(){
-(f[s].q=f[s].q||[]).push(arguments)},f[s].l=1*new Date();h=i.createElement(r),
-l=i.getElementsByTagName(r)[0];h.async=1;h.src=e;l.parentNode.insertBefore(h,l)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-XXXXXXXX-XX', 'yourdomain.com');
-ga('send', 'pageview');
-</script>-->
 
 	
 </body>

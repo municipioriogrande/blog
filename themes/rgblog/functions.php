@@ -423,3 +423,26 @@ function shortcode_ui_dev_advanced_example() {
 	shortcode_ui_register_for_shortcode( 'rgcta', $shortcode_ui_args );
 }
 
+
+
+
+
+// add font type & font size selection option in the WYSIWYG editor
+if ( ! function_exists( 'wdm_add_mce_fontoptions' ) ) {
+	function wdm_add_mce_fontoptions( $buttons ) {
+			array_unshift( $buttons, 'fontselect' );
+			array_unshift( $buttons, 'fontsizeselect' );
+			return $buttons;
+	}
+}
+add_filter( 'mce_buttons_2', 'wdm_add_mce_fontoptions' );
+
+
+
+
+//Register support for Gutenberg wide images in your theme
+
+add_action( 'after_setup_theme', function () {
+	add_theme_support( 'align-wide' );
+ } );
+
