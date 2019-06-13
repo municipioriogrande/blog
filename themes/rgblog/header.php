@@ -76,7 +76,6 @@
 						         );
 				?>
 
-				
 				<ul>
 					<?php 
 
@@ -93,7 +92,14 @@
 							$sub_menu_set = true;
 						}
 
-						echo '<li><a href="' . $categories_info[$key][1] . '">' . $categories_info[$key][0] . '</a></li>';
+						if ( $ctr <= 26 ) {
+							echo '<li><a href="' . $categories_info[$key][1] . '">' . $categories_info[$key][0] . '</a></li>';
+						}
+						else {
+							echo '<li><a href="/topics">Todas las categorías</a></li>';
+							break;
+							
+						}
 					} 
 
 					if ($ctr > 3 and $sub_menu_set) {
