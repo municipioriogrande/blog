@@ -446,3 +446,19 @@ add_action( 'after_setup_theme', function () {
 	add_theme_support( 'align-wide' );
  } );
 
+
+
+
+
+
+ add_filter( 'pre_get_posts', function ( $query ) {
+	// exclude attachments from search
+	if ( !is_admin() && $query->is_main_query() ) {
+		if ( $query->is_search ){
+			$query->set( 'post_type',array("post", "pages") );
+			return $query;
+		}
+	}
+
+} );
+ 
