@@ -2,6 +2,9 @@
 
 /*
 Plugin Name: Posts EDLT
+Author: Ariela Quinzi
+Description: Custom Posts para el EDLT
+Version: 1.0
 */
 
 // Register Custom Post Type
