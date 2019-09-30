@@ -68,7 +68,9 @@ $social_sharing_list .= '</ul>';
 							<a href="<?php the_permalink(); ?>" class="u-url"><?php the_title(); ?></a>
 						</h1>
 
-						<?php rgblog_post_thumbnail("large"); ?>
+						<?php //rgblog_post_thumbnail("large"); 
+						rgblog_post_thumbnail_single();
+						?>
 
 						<div class="columns">
 							<div class="social-bar">

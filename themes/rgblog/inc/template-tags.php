@@ -154,6 +154,54 @@ if ( ! function_exists( 'rgblog_entry_footer' ) ) :
 	}
 endif;
 
+
+
+if ( ! function_exists( 'rgblog_post_thumbnail_single' ) ) :
+	/**
+	 * Displays an optional post thumbnail. Fixed srcset for single view
+	 *
+	 * Wraps the post thumbnail in an anchor element on index views, or a div
+	 * element when on single views.
+	 */
+	function rgblog_post_thumbnail_single() {
+		if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
+			return;
+		}
+
+		if ( is_singular() ) :
+			?>
+			<div class="post-thumbnail u-photo">
+
+				<?php
+				$attachment_id   = get_post_thumbnail_id(get_the_ID());
+				$img_src_alttext = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );;
+				$img_src_medium       = wp_get_attachment_image_url( $attachment_id, 'medium' );
+				$img_src_medium_large = wp_get_attachment_image_url( $attachment_id, 'medium_large' );
+				$img_src_large        = wp_get_attachment_image_url( $attachment_id, 'large' );
+				?>
+				<img src="<?php echo esc_url( $img_src_large ); ?>" class="attachment-full size-full wp-post-image" alt="<?php echo $img_src_alttext;?>"
+				srcset="<?php echo $img_src_large; ?> 1024w, <?php echo $img_src_medium; ?> 400w, <?php echo $img_src_medium_large; ?> 600w"
+				sizes="(max-width: 640px) 100vw, 640px" width="640" height="426">
+
+			</div><!-- .post-thumbnail -->
+
+		<?php
+		endif; // End is_singular().
+	}
+endif;
+
+
+
+
+
+
+
+
+
+
+
+
+
 if ( ! function_exists( 'rgblog_post_thumbnail' ) ) :
 	/**
 	 * Displays an optional post thumbnail.
