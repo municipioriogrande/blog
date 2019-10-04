@@ -1,10 +1,9 @@
-=== Press Permit Core ===
+=== PressPermit ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins
-Tags: restrict, access, groups, supplemental role, category permissions, page permissions
+Tags: restrict, access, permissions, cms, user, private, category, pages, privacy, capabilities, role, scoper
 Requires at least: 4.7
-Requires PHP: 5.4
-Tested up to: 5.2
-Stable tag: 2.6.3
+Tested up to: 5.2.2
+Stable tag: 2.7.14
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,9 +11,11 @@ Advanced yet accessible content permissions. Give users or groups type-specific 
 
 == Description ==
 
-[Press Permit](https://presspermit.com) is an advanced content permissions system, now part of the [PublishPress](https://publishpress.com) family of professional publishing tools.
+[PressPermit](https://publishpress.com/presspermit/) is an advanced content permissions system, now part of the [PublishPress](https://publishpress.com/) family of professional publishing tools.
 
-Core Features include:
+**Important Note for current Pro users:** Download PressPermitPro from publishpress.com before upgrading to this version. PressPermit Pro is now a separate plugin which replaces both Press Permit Core and all PP extension plugins. [Contact us](https://publishpress.com/contact/?pp_topic=presspermit-migration) for assistance in migrating your account.
+
+Core Features included in this plugin:
 
   * Permissions model extends the WordPress roles framework
   * Assign supplemental roles and exceptions for custom post types [youtube https://www.youtube.com/watch?v=v7jTkgmjHrw&rel=0&hd=1]
@@ -24,18 +25,18 @@ Core Features include:
 
   * For any post or category, select who to enable or block
 
-Pro [extensions](https://presspermit.com/extensions) are [available](https://presspermit.com/purchase) for [additional access control and features](https://www.youtube.com/playlist?list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3):
+PressPermit [Pro](https://publishpress.com/presspermit/) is [available](https://publishpress.com/pricing/) for [additional access control and features](https://www.youtube.com/playlist?list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3):
 	
   * Customize editing access for specific posts or terms - [video](https://www.youtube.com/watch?v=0yOEBD8VE9c&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=3)
   * Limit category/term assignment and page parent selection - [video](https://www.youtube.com/watch?v=QqvtxrqLPwY&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=4)
-  * File URL Filter: regulate direct access to uploaded files - [video](https://www.youtube.com/watch?v=kVusrdlgSps&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=15)
+  * File Access: regulate direct access to uploaded files - [video](https://www.youtube.com/watch?v=kVusrdlgSps&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=15)
   * Hidden Content Teaser - [video](https://www.youtube.com/watch?v=d_5r8NKjxDQ&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=9)
   * bbPress: customize viewing, topic creation or reply submission permissions per-forum
   * bbPress: display a teaser message for unreadable topics or replies
   * Date-limited membership in Permissions Groups - [video](https://www.youtube.com/watch?v=hMOVvCy_9Ws&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=7)
   
   * Moderation statuses control multi-step moderation - [video](https://www.youtube.com/watch?v=v8VyKP3rIvk&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=8)
-  * PublishPress or Edit Flow integration - [video](https://www.youtube.com/watch?v=eeZ6CBC5kQI&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=11)
+  * PublishPress integration - [video](https://www.youtube.com/watch?v=eeZ6CBC5kQI&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=11)
   * Revisionary: regulate moderated editing of published content - [video](https://www.youtube.com/watch?v=kCD6HQAjUXs&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=12)
   * BuddyPress Permission Groups for additional reading or editing access - [video](https://www.youtube.com/watch?v=oABIT7wki_A&list=PLyelWaWwt1HxuwrZDRBO_c70Tm8A7lfb3&index=14)
   * Circles: block access to content not authored by a fellow group member
@@ -45,16 +46,90 @@ Pro [extensions](https://presspermit.com/extensions) are [available](https://pre
 	
 == Upgrade Notice ==
 
+= 2.7.14 =
+Pro users: download PressPermit Pro from publishpress.com before upgrading to this version.
+
 = 2.1.14 =
 Initial production release
 
 == Changelog ==
 
-= 2.6.3 - 3 May 2019 =
-* Compat : PublishPress - Use new menu icon for Permissions menu (otherwise extra menu icon pushed down to next item)
+= 2.7.14 - 13 Sep 2019 =
+* Fixed : Exceptions assigned for "All" post types and "Only these" categories blocked access to all categories
+* Change : Work around unexplained class loading error on early user_has_cap filtering with CAS integration
+* Fixed : Fatal error if Revisionary 1.2.x (releases older than March 2019) active
+* Change : Better dismissal support for admin notices
+* Change : Better sharing / separation of Core, Pro code
 
-= 2.6.2 - 2 May 2019 =
-* Compat : Pro (Revisionary) - Page Edit exception did not enable edit or approval of Pending / Scheduled revisions of the page (also requires PP Collaborative Editing Pack 2.5.8)
+= 2.7.13 - 21 Aug 2019 =
+* Fixed : If get_pages() was called with depth, child_of, and exclude_tree arguments, some pages were not properly excluded
+* Fixed : PHP Notices for undefined variable if get_pages() or wp_list_pages() is called with hide_empty argument
+* Change : The informational notice displayed to existing Pro users (to replace PressPermit with PressPermit Pro) is now dismissible  
+
+= 2.7.12 - 6 Aug 2019 =
+* Fixed : Add New User screen was missing Permission Groups selection UI
+* Fixed : Categories were improperly filtered when queried within a shortcode, and in other cases where get_terms() was already previously called
+* Fixed : Conflict with TagDiv Cloud Library plugin (Newspaper Theme) and others that use a non-standard REST handler structure
+* Fixed : Inconsistent formatting of messages below Plugins row
+* Fixed : Gutenberg - Improvements to REST term filtering
+* Lang : Update .po file
+
+= 2.7.11 - 17 Jul 2019 =
+* Change : Adjust explanation about PressPermit Pro account migration
+
+= 2.7.10 - 17 Jul 2019 =
+* Fixed : Supplemental Media Editor role granted Post Editor capabilities if Permissions > Settings > Core > Filtered Post Types > "Enforce distinct edit, delete capability requirements for Media" not enabled
+
+= 2.7.9 - 11 Jul 2019 =
+* Fixed : Users lacking read capability were blocked from viewing public posts (now apply this requirement only if constant PRESSPERMIT_STRICT_READ_CAP is defined)
+* Fixed : API - undefined function pp_get_groups_for_user
+* Fixed : Notice for undefined variables last_siteroles_hash, siteroles_hash
+* Change : If constant PRESSPERMIT_MEDIA_IGNORE_UNREGISTERED_PARENT_TYPES defined, Media Library filtering treats media attached to a post of unregistered type as unattached
+
+= 2.7.8 - 8 Jul 2019 =
+* Fixed : Group roles were not applied under some configurations
+* Fixed : Permissions > Settings > Installation screen always displayed "A presspermit.com key appears to be active" - even on fresh installs. 
+* Fixed : Eyes Only User Access Shortcode plugin - Fatal error on Edit Page screen
+* Perf : Eliminated redundant role retrieval queries, processing
+* Change : Adjustment to Press Permit Core migration script
+
+= 2.7.7 - 5 Jul 2019 =
+* Fixed : Fatal error on front end if Nav Menu includes a Category
+* Fixed : Some stored exceptions were not shown on Edit Permissions screen, under some conditions
+* Fixed : Gutenberg Page Parent dropdown hidden or inappropriately restricted if Read Page exceptions stored
+
+= 2.7.6 - 5 Jul 2019 =
+* Fixed : Eyes Only User Access Shortcode plugin - Fatal error on activation
+
+= 2.7.5 - 4 July 2019 =
+* Fixed : Corrections and clarifications to Pro upgrade links
+
+= 2.7.4 - 4 July 2019 =
+* Fixed : Fatal error on Permissions > Settings screen
+
+= 2.7.3 - 4 July 2019 =
+* Fixed : Error loading language file on non-English sites, servers with open_basedir restrictions
+* Fixed : PHP warning for undefined variable post_blockage_priority, under some configurations
+* Fixed : API - Error creating a new custom Permission Group via API function call
+
+= 2.7.2 - 27 Jun 2019 =
+* Fixed : Fatal error on Plugins screen on some sites
+
+= 2.7.1 - 24 Jun 2019 =
+* Fixed : Some wp-admin captions incorrectly identified this plugin as PressPermit Pro
+* Change : Notice on Plugins screen for existing Pro installations
+
+= 2.7 - 21 Jun 2019 =
+* Change : This plugin no longer used with Pro extensions (replaced by PressPermit Pro)
+* Change : Improved code structure using PHP namespaces
+* Compat : Renamed functions, classes, globals, constants, page slugs and hooks (with back compat) to avoid conflicts with other packages
+* Compat : Pro - PublishPress Custom Statuses
+* Feature : Pro - Custom Privacy statuses, default/lock privacy settings implemented in Gutenberg editor
+* Feature : On PressPermit Settings update, return to previous tab
+* Fixed : Secondary query_posts() calls blocked results inappropriately under some configurations, due to redundant filtering of the terms query
+* Fixed : Term restrictions applied for "all post types" could not be overridden by exceptions on a different taxonomy
+* Perf : Redundant filtering of terms query within WP_Query calls
+* Change : CSS improvements in Permissions > Settings
 
 = 2.6.1 - 22 Feb 2019 =
 * Fixed : PHP Notice on Plugins > Add New
@@ -66,7 +141,6 @@ Initial production release
 * Change : Purchase / renewal prompt captions and styling
 * Change : Update support links and captions for help ticket infrastructure
 * Change : Minimum WordPress version 4.7
-* Change : Minimum PHP version 5.4
 
 = 2.5.5 - 21 Jan 2019 =
 * Fixed : On Edit Page screen, Groups and Users could not be selected for exceptions if WP_DEBUG was defined
@@ -131,7 +205,7 @@ Initial production release
 * Perf : Improved database query construction and api behavior when inserting propagating exceptions on a page tree (for previous method, define constant PP_DISABLE_OPTIMIZED_INSERTIONS)
 * Fixed : Do not auto-delete role metagroups even if stored roles are no longer active. Otherwise, omission of role registration by 3rd party code triggers unwanted metagroup regeneration, causing stored permissions to be disassociated from users.
 * Fixed : Users whose role metagroup was inappropriately deleted are automatically restored on login or when included in wp-admin Users listing
-* Fixed : Fatal error for undefined function if pp_get_group() is called without first calling pp_load_admin_api()
+* Fixed : Fatal error for undefined function if presspermit_get_group() is called without first calling presspermit_load_admin_api()
 * Fixed : Incorrect REST response under some conditions if PP Collaborative Editing (Pro) not activated
 * Fixed : Edit Post screen: stored post exceptions were not displayed in Exceptions metaboxes on some installations
 * Fixed : If a post has exceptions assigned directly to a user, all of its group-assigned "Only these" exceptions are cleared on post update
@@ -202,13 +276,13 @@ Initial production release
 = 2.3.11 - 9 May 2016 =
 * Perf : Simplify query clauses that ensure non-blockage of unfiltered post types for anonymous viewer
 * Fixed : Pro - Don't propagate bbPress exceptions to topics and replies needlessly
-* Change : Pro - Better formatting for support key status UI
+* Change : Pro - Better formatting for license key status UI
 * Change : Move most hardcoded style rules in plugin admin to CSS 
 
 = 2.3.10 - 28 Apr 2016 =
 * Fixed : On sites that have third party code assigning page parents with a different post type, saving exceptions for "page and sub-pages" causes the storage of unused exception records.  This has no functional effect, but presented a performance issue or even script timeout on sites that have thousands of page children.  
 * Compat : WPML (and possibly other plugins) - if PP filtering of a post type is disabled, posts of that type are not readable to anonymous users
-* Pro : Permissions > Settings > Install now displays link to presspermit.com account page for display of support key(s) and activated site(s)
+* Pro : Permissions > Settings > Install now displays link to presspermit.com account page for display of license key(s) and activated site(s)
 
 = 2.3.9 - 12 Apr 2016 =
 * Compat : WP 4.5 - Exception metaboxes on Edit Term screen were missing
@@ -219,13 +293,13 @@ Initial production release
 * Fixed : When a subpage was edited by a user blocked who cannot modify page parent due to an "Only these - none" association exception, the page was set to top level if Permissions > Settings > Editing > Page Structure set to "no parent filter" or "Page Authors, Editors and Administrators".  This can now be prevented by assigning "Not these - none" association exception.
 * Fixed : Pro - Authors could not edit their own draft posts via REST API v2
 * Change : Support constant PP_UNFILTERED_TERM_COUNTS
-* Change : Pro - Refresh link in support key entry / status UI
+* Change : Pro - Refresh link in license key entry / status UI
 
 = 2.3.8 - 18 Jan 2016 =
 * Fixed : "Only these" exceptions set for a post type based on term/category causes the Edit Post form to default-assign the corresponding exception directly to posts of the same ID.  If the exception is based on term "(none)", the exception is default-assigned to all new posts.  NOTE: Affected posts will need to be manually edited.
 
 = 2.3.7 - 7 Jan 2016 =
-* Fixed : Truncated Plugins listing if PP support key is inactive or expired (since 2.3.5)
+* Fixed : Truncated Plugins listing if PP license key is inactive or expired (since 2.3.5)
 
 = 2.3.6 - 7 Jan 2016 =
 * Fixed : Pro - extension installs and updates failed (since 2.3.5)
@@ -234,7 +308,7 @@ Initial production release
 * Lang : Some strings were missing text domain
 * Lang : Updated .pot, .po files
 * Fixed : Pro - Change log for extensions was not displayed under some conditions
-* Change : Support key availability, expiration notices for PP Core in Plugins row
+* Change : License key availability, expiration notices for PP Core in Plugins row
 
 = 2.3.4 - 4 Jan 2016 =
 * Fixed : Fatal error on user registration
@@ -350,7 +424,7 @@ Initial production release
 = 2.1.52 - 3 Feb 2015 =
 * Compat : The Events Calendar - Ajax refresh of calendar did not display events to subscribers or anonymous viewers
 * Compat : Visual Composer - invalid display of VC metabox on Edit Term screen
-* Change (Pro) : Refresh support key data to more promptly display expiration status
+* Change (Pro) : Refresh license key data to more promptly display expiration status
 * Fixed : White screen after cloning permissions from one role group to another
 * Fixed : PHP warning for deprecated function call on Permissions > Groups screen
 
@@ -364,7 +438,7 @@ Initial production release
 = 2.1.50 - 5 Jan 2015 =
 * Fixed : Pro: Media Items were not properly filtered in grid view
 * Fixed : Errors on Add Supplemental Role UI if standard WP role definition are deleted
-* Fixed : Pro: Expired support key caused incorrect display of Activation UI
+* Fixed : Pro: Expired license key caused incorrect display of Activation UI
 * Fixed : Fatal Error when calling some PP API functions from front end
 * Fixed : Fatal Error for redeclared class SQLTokenizer on some installations
 * Compat : JSON REST API - filtering of calls does not match typical API usage (now not filtered at all unless PP_FILTER_JSON_REST constant defined)
@@ -391,7 +465,7 @@ Initial production release
 * Feature : Option to change exceptions handling to make post-specific blockages take priority over term-specific additions
 * Fixed : Media Upload by non-Editors stalled on "crunching" under some configurations
 * Fixed : Edit User Permissions screen labeled group Exceptions box as "Supplemental Roles"
-* Fixed : Support key expiration message was displayed incorrectly in some situations
+* Fixed : License key expiration message was displayed incorrectly in some situations
 
 = 2.1.46 - 24 July 2014 =
 * Feature : Option to keep non-editable posts visible in wp-admin (only if PP Collaborative Editing pack is NOT active).
@@ -421,7 +495,7 @@ Initial production release
 = 2.1.44 - 26 Feb 2014 =
 * Fixed : With PP Compatibility extension enabled on Multisite and network-wide groups enabled, fatal error when clicking "Add New" link at top of Groups screen
 * Change : Allow "Also These" / "Enabled" exceptions to be assigned to {All} and {Anonymous} groups if constant PP_ALL_ANON_FULL_EXCEPTIONS is defined
-* Fixed : PHP warning when third party plugin causes an object to be passed into pp_sanitize_key() 
+* Fixed : PHP warning when third party plugin causes an object to be passed into presspermitSanitizeKey() 
 
 = 2.1.43 - 4 Feb 2014 =
 * Fixed : Posts inappropriately hidden from anonymous users on some installations
@@ -489,7 +563,7 @@ Initial production release
 * Change : If PP File URL Filter is not active, Reading Exceptions metabox on Edit Media screen displays notice about direct file access
 * Change : Display warning if a supplemental role assignment will use default capabilities due to invalid customization of the role definition 
 * Change : Include PP Group Membership in Permissions > Settings > Help > configuration data upload by default
-* Fixed : Database error if external code calls pp_get_groups_for_user() with a metagroup_type argument
+* Fixed : Database error if external code calls presspermit_get_groups_for_user() with a metagroup_type argument
 * Fixed : Fatal error on Permissions > Settings > Help > configuration data upload if RS/PP import data enabled and PP Import version number was deleted from database
 
 = 2.1.32 - 8 Nov 2013 =
@@ -551,7 +625,7 @@ Initial production release
 * Fixed : Non-functional "update now" link for PP Core on Permissions > Settings > Install screen (though plugin could be updated through version details popup)
 
 = 2.1.20 - 20 Sep 2013 =
-* Fixed : Could not update plugin from Plugins screen without support key activation (although updates were available from Permissions > Settings > Install since 2.1.15)
+* Fixed : Could not update plugin from Plugins screen without license key activation (although updates were available from Permissions > Settings > Install since 2.1.15)
 * Change : Get PP Core updates from wordpress.org
 
 = 2.1.19 - 20 Sep 2013 =
@@ -570,7 +644,7 @@ Initial production release
 * Feature : Permissions > Settings > Advanced > Anonymous Users > "Disable all filtering for anonymous users"
 * Change : Support PP_ALLOW_UNFILTERED_FRONT constant. When a logged user has pp_unfiltered capability, suppresses the front-end filtering which normally adds readable private posts to get_pages listing, post count, etc.
 * Change : Add error message string related to new PP Pro 3-site package  
-* Change : Improved layout of Support Key and Extensions sections on Permissions > Settings > Install
+* Change : Improved layout of License key and Extensions sections on Permissions > Settings > Install
 * Change : Improved layout of PP Capabilities section on Permissions > Settings > Advanced
 * Change : Added margin between change log entries!
 
@@ -590,11 +664,11 @@ Initial production release
 
 = 2.1.15 - 11 Sep 2013 =
 * Feature : Permissions > Settings > Advanced > Misc > "User Search: Filter by WP role" - adds a role dropdown below user search button
-* Change : Support PP Core updates without support key activation
+* Change : Support PP Core updates without license key activation
 
 = 2.1.14 - 9/9 2013 =
 * Initial production release
-* Change : Info link on Install tab for screencast links and other PP Pro promotional info if support key inactive or expired
+* Change : Info link on Install tab for screencast links and other PP Pro promotional info if license key inactive or expired
 * Lang : updated .po file
 
 == Setup ==
@@ -605,23 +679,23 @@ Permissions can be modified from post edit screens, term edit screens, or the pl
 
 == Compatibility Notes ==
 
-**caching plugins** : disable caching for logged users (unless you only use Press Permit to customize editing access).
+**caching plugins** : disable caching for logged users (unless you only use PressPermit to customize editing access).
 
 **Custom WP_Query calls** : Often, conflicts can be resolved by specifying a post_type argument. To prevent improper filtering of front-end ajax calls, pass required_operation=read or hook into the pp_unfiltered_ajax filter and add your action to the return array.
 
-**WPML Multilingual CMS** : plugin creates a separate post / page / category for each translation.  PP for WPML extension plugin is required to filter the Press Permit Exceptions item selection UI by language and (optionally) to enable mirroring of exceptions to translations.
+**WPML Multilingual CMS** : plugin creates a separate post / page / category for each translation.  The Compatibility Pack module (included in PressPermit Pro) is required to filter the PressPermit Exceptions item selection UI by language and (optionally) to enable mirroring of exceptions to translations.
 
 == Frequently Asked Questions ==
 
-= How does Press Permit compare to Capability Manager Enhanced, User Role Editor and other role editor plugins? =
+= How does PressPermit compare to Capability Manager Enhanced, User Role Editor and other role editor plugins? =
 
-Press Permit's functionality is different from and complementary to a basic role editor / user management plugin.  In terms of permissions, those plugins' primary function is to alter WordPress' definition of the capabilities included in each role.  In other words, they expose lots of knobs for the permissions control which WordPress innately supports. That's a valuable task, and in many cases will be all the role customization you need.  Since WP role definitions are stored in the main WordPress database, they remain even said plugin is deactivated. [Capability Manager Enhanced](https://wordpress.org/plugins/capability-manager-enhanced) is a WordPress role editor designed for integration with Press Permit.
+PressPermit's functionality is different from and complementary to a basic role editor / user management plugin.  In terms of permissions, those plugins' primary function is to alter WordPress' definition of the capabilities included in each role.  In other words, they expose lots of knobs for the permissions control which WordPress innately supports. That's a valuable task, and in many cases will be all the role customization you need.  Since WP role definitions are stored in the main WordPress database, they remain even said plugin is deactivated. [Capability Manager Enhanced](https://wordpress.org/plugins/capability-manager-enhanced) is a WordPress role editor designed for integration with PressPermit.
 
-Press Permit can assist you in turning the site-wide capability knobs for desired post types. But it also supercharges your permissions engine. Press Permit it is particularly useful when you want to customize access to a specific post, category or term.  Extension plugins add collaborative editing control, file filtering and other features which are not otherwise possible. The plugin will work with your WP roles as a starting point, whether customized by a role editor or not.  Users of the PP Collaborative Editing extension can (after activating advanced settings) navigate to Permissions > Settings > Role Usage to see (or modify) how Press Permit is using your WP role definitions. Press Permit's modifications remain only while it stays active.
+PressPermit can assist you in turning the site-wide capability knobs for desired post types. But it also supercharges your permissions engine. PressPermit it is particularly useful when you want to customize access to a specific post, category or term.  Extension plugins add collaborative editing control, file filtering and other features which are not otherwise possible. The plugin will work with your WP roles as a starting point, whether customized by a role editor or not.  Users of the PP Collaborative Editing extension can (after activating advanced settings) navigate to Permissions > Settings > Role Usage to see (or modify) how PressPermit is using your WP role definitions. PressPermit's modifications remain only while it stays active.
 
-= What extra access control would Press Permit Pro give me? =
+= What extra access control would PressPermit Pro give me? =
 
-For a detailed comparison, see the [Role Scoper / Press Permit Feature Grid](https://presspermit.com/pp-rs-feature-grid). Here are some highlights:
+For a detailed comparison, see the [Role Scoper / PressPermit Feature Grid](https://publishpress.com/presspermit-features/). Here are some highlights:
 
 [youtube https://www.youtube.com/watch?v=0yOEBD8VE9c&rel=0&hd=1]
 Customize editing permissions for specific posts.
@@ -639,7 +713,7 @@ Define custom post statuses for access-controlled multi-step moderation.
 &nbsp;
 
 [youtube https://www.youtube.com/watch?v=eeZ6CBC5kQI&rel=0&hd=1]
-PublishPress and Edit Flow integration.
+PublishPress integration.
 
 &nbsp;
 
@@ -650,21 +724,21 @@ Prevent inappropriate "back door" access by direct file url.
 
 = What about Role Scoper? =
 
-Moving forward, we do not plan any major development of the Role Scoper code base.  If you encounter issues with Role Scoper and need to migrate to a different solution, [Press Permit Pro](https://presspermit.com) provides access to an import script which can (for most installations) automate the majority of your Role Scoper migration.
+Moving forward, we do not plan any major development of the Role Scoper code base.  If you encounter issues with Role Scoper and need to migrate to a different solution, [PressPermit Pro](https://publishpress.com/presspermit/) provides access to an import script which can (for most installations) automate the majority of your Role Scoper migration.
 
-For a detailed feature comparison, see the [RS/PP Feature Grid](https://presspermit.com/pp-rs-feature-grid).
+For a detailed feature comparison, see the [RS/PP Feature Grid](https://publishpress.com/presspermit-features/).
 
 = Can I import settings from Role Scoper? =
 
-Yes. [Press Permit Pro](https://presspermit.com) provides access to the PP Import extension.  This script can import the most Role Scoper groups, roles, restrictions and options.  Some manual followup may be required for some configurations.
+Yes. [PressPermit Pro](https://publishpress.com/presspermit/) can import the most Role Scoper groups, roles, restrictions and options.  Some manual followup may be required for some configurations.
 
-= Is Press Permit an out-of-the-box membership solution? =
+= Is PressPermit an out-of-the-box membership solution? =
 
-No, but it can potentially be used in conjunction with an e-commerce or membership plugin. If you have a way to sell users into a WordPress role or BuddyPress group, Press Permit can grant access based on that membership.
+No, but it can potentially be used in conjunction with an e-commerce or membership plugin. If you have a way to sell users into a WordPress role or BuddyPress group, PressPermit can grant access based on that membership.
 
-= Where does Press Permit store its settings?  How can I completely remove it from my database? =
+= Where does PressPermit store its settings?  How can I completely remove it from my database? =
 
-Press Permit creates and uses the following tables: pp_groups, pp_group_members, ppc_roles, ppc_exceptions, ppc_exception_items. Press Permit options stored to the WordPress options table have an option name prefixed with "pp_". Due to the potential damage incurred by accidental deletion, no automatic removal is currently available. You can use a SQL editing tool such as phpMyAdmin to drop the tables and delete the pp options.
+PressPermit creates and uses the following tables: pp_groups, pp_group_members, ppc_roles, ppc_exceptions, ppc_exception_items. PressPermit options stored to the WordPress options table have an option name prefixed with "pp_". Due to the potential damage incurred by accidental deletion, no automatic removal is currently available. You can use a SQL editing tool such as phpMyAdmin to drop the tables and delete the pp options.
 
 == Screenshots ==
 
@@ -676,6 +750,6 @@ Press Permit creates and uses the following tables: pp_groups, pp_group_members,
 6. Edit Permission Group (custom group enabled to read specific page)
 7. Edit Permission Group (WP role group with supplemental roles)
 8. Edit Permission Group (metagroup blocked from reading a category)
-9. Press Permit Core Settings
-10. Press Permit Advanced Settings
-11. Press Permit Editing Settings (with pro extension PP Collaborative Editing)
+9. PressPermit Core Settings
+10. PressPermit Advanced Settings
+11. PressPermit Editing Settings (with PressPermit Pro's Collaborative Publishing module)

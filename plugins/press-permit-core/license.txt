@@ -10,7 +10,7 @@ Kevin Behrens - PublishPress
 Jonathan Davis - Ingenesis Limited (as indicated in source code)
 
 Copyrights:
-All works distributed with the Press Permit Plugin for WordPress are
+All works distributed with the PressPermit Plugin for WordPress are
 copyrighted by their respective authors.  For more complete copyright
 and licensing information, see the copyright notices contained in the
 source code files.
