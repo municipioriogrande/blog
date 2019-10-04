@@ -677,6 +677,14 @@ body.single #content {
 		font-size: medium;		
 	}
 
+	// overwrite entry's body style when using classic editor (module, Gutenberg)
+	//   this is because it looks bad when copy - pasting
+	.entry-content p span {
+		//font-family: "Muli" !important;
+		font-family: $main-font !important;
+		font-size: inherit !important;
+  	}
+
 	.date {
 		font-size: small;
 		text-align: right;

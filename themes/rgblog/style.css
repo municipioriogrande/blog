@@ -1765,6 +1765,10 @@ body.single #content {
   line-height: 1.7em;
   font-size: medium;
 }
+.single article .content-wrapper .entry-content p span {
+  font-family: "Muli", Arial, sans-serif !important;
+  font-size: inherit !important;
+}
 .single article .content-wrapper .date {
   font-size: small;
   text-align: right;
