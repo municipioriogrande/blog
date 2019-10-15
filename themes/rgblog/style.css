@@ -1751,6 +1751,7 @@ body.single #content {
 }
 .single article .content-wrapper .category a:hover {
   background-color: #ff6a00;
+  color: #fff;
 }
 .single article .content-wrapper .content a {
   color: #ff6a00;
@@ -1828,6 +1829,10 @@ body.single #content {
   color: #ff6a00;
   font-size: 1.3em;
 }
+.single article .social-bar .social-links li a:hover:before {
+  transform: rotate(-10deg);
+  transition: 0.1s ease-in-out transform;
+}
 
 .single article .social-share {
   text-align: center;
@@ -1864,6 +1869,10 @@ body.single #content {
   line-height: 1em;
   font-size: 1.3em;
   font-weight: normal;
+  transition: 0.15s ease-in-out transform;
+}
+.single article .social-share .social-links li a:hover:before {
+  transform: translateY(-8px);
 }
 
 .related-posts .title {

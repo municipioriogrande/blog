@@ -656,6 +656,7 @@ body.single #content {
 			
 			&:hover {
 				background-color: $orange;
+				color: #fff;
 			}
 		}
 	}
@@ -744,6 +745,11 @@ body.single #content {
 		color: $orange;
 		font-size: 1.3em;
 	}
+	
+	a:hover:before {
+		transform: rotate(-10deg);
+		transition: 0.1s ease-in-out transform;
+	}
 }
 
 .single article .social-share  {
@@ -777,6 +783,12 @@ body.single #content {
 				line-height: 1em;
 				font-size: 1.3em;
 				font-weight: normal;
+				transition: .15s ease-in-out transform;
+
+			}
+
+			a:hover:before {
+					transform: translateY(-8px);
 			}
 		}
 	}
