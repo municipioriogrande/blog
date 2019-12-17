@@ -8,6 +8,12 @@ $main-font: 'Muli', Arial, sans-serif;
 $font-awesome-normal: "Font Awesome 5 Free";
 $font-awesome-brands: "Font Awesome 5 Brands";
 
+//new colors
+$light-blue: #14a2db; //rgba(20,162,219,1)
+$aqua-green: #2ab99e; //rgba(42,185,158,1)
+
+
+
 @mixin border-radius($size) {
 	-webkit-border-radius: $size;
 		-moz-border-radius: $size;
@@ -44,6 +50,18 @@ $font-awesome-brands: "Font Awesome 5 Brands";
 			   column-count: $property;
 }
 
+
+@mixin linear-gradient-2020() {
+	background-color: $light-blue;
+	background: linear-gradient(180deg, $light-blue 0%, $aqua-green 100%);
+}
+
+
+
+
+
+
+
 body {
 	font-size: 16px;
 	color: $deep-blue;
@@ -63,7 +81,7 @@ a {
 .orange-separator{
 	width: 68%;
 	height: 3px;
-	background-color: $orange;
+	@include linear-gradient-2020();
 	margin: 3em 14em;
 
 	@media screen and (max-width: $mobile-width) {
@@ -162,18 +180,18 @@ a {
   background-color: transparent;
 
   // Progress bar value for IE10+
-  color:$orange;
+  color:$light-blue;
 
 	&::-webkit-progress-bar {
 		background-color: transparent;
 	}
 
 	&::-webkit-progress-value {
-	  background-color: $orange;
+	  @include linear-gradient-2020();
 	}
 
 	&::-moz-progress-bar {
-	  background-color: $orange;
+	  @include linear-gradient-2020();
 	}
 }
 
@@ -310,7 +328,7 @@ a {
 	 left: 0;
 	 top: 0;
 	 width: 100%;
-	 padding: 1.6em 5em 0;
+	 padding: 1em 5em 0;
 	 background-color: #fff;
 	 z-index: 900;
 
@@ -328,8 +346,8 @@ a {
 		@media screen and (max-width: $mobile-width) {
 			flex-direction: column;
 			align-items: normal;
-		   display: block;
-		   margin: 0 -0.5em;
+			display: block;
+			margin: 0 -0.5em;
 	  }
 	}
 	
@@ -344,11 +362,11 @@ a {
 		}
 
 		img {
-			width: 180px;
+			width: 140px;
 			@include transition(0.3s linear);
 			
 			@media screen and (max-width: $mobile-width) {
-				width: 150px;
+				width: 140px;
 			}
 
 		}
@@ -361,7 +379,7 @@ a {
 		}
 		
 		.logo img {
-			width: 150px;
+			width: 120px;
 		}
 	}
 }
@@ -382,13 +400,13 @@ a {
 	}
 
 	.search-submit {
-		background-color: $orange;
+		@include linear-gradient-2020();
 		color: white;
 		border: 0;
 		padding: .7em 1em;
 		font-size: 0.66em;
 		@media screen and (max-width: $mobile-width) {
-	   	padding: .7em 0.5em;
+			padding: .7em 0.5em;
 		}
  	}
 
@@ -427,7 +445,7 @@ a {
 	 }
 	a:hover,
 	li.has-submenu .item-more:hover {
-		color: $orange;
+		color: $light-blue;
 	}
 
 	li.has-submenu .item-more {
@@ -510,7 +528,7 @@ body.single #content {
 }
 
 #site-footer {
-	background-color: $orange;
+	@include linear-gradient-2020();
 	color: #fff;
 	margin: 4em 0 0;
 	padding: 1.2em 7em;
@@ -538,6 +556,7 @@ body.single #content {
 	}
 
 	.logo {
+		max-width: 180px;
 		@media screen and (max-width: $mobile-width) {
 			padding-bottom: 1em;
 		}
@@ -568,7 +587,7 @@ body.single #content {
 		content: "\f106";
 		font-family: $font-awesome-normal;
 		background-color: #fff;
-		color: $orange;
+		color: $light-blue;
 		font-weight: bold;
 		width: 40px;
 		display: inline-block;
@@ -655,7 +674,7 @@ body.single #content {
 			transition: .2s linear background;
 			
 			&:hover {
-				background-color: $orange;
+				@include linear-gradient-2020();
 				color: #fff;
 			}
 		}
@@ -742,7 +761,7 @@ body.single #content {
 	margin: 1em 0;
 
 	a:before {
-		color: $orange;
+		@include linear-gradient-2020();
 		font-size: 1.3em;
 	}
 	
@@ -820,7 +839,7 @@ body.single #content {
 	}
 	
 	.title{
-		background-color: $orange;
+		@include linear-gradient-2020();
 		@include border-radius(200px);
 		padding: 0.3em 1em;
 		color: #fff;
@@ -885,11 +904,16 @@ body.single #content {
 				line-height: 2.4em;
 			}
 			
-			&:hover,&.current {
-				border-color: $orange;
+			&:hover, &.current {
+				border-color: $light-blue;
 			}
+			/*
 			&.current {
-				color: $orange;
+				color: $light-blue;
+			}
+			*/
+			&:visited {
+				color: grey;
 			}
 		}
 

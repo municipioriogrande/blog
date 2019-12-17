@@ -1119,7 +1119,8 @@ a {
 .orange-separator {
   width: 68%;
   height: 3px;
-  background-color: #ff6a00;
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
   margin: 3em 14em;
 }
 @media screen and (max-width: 720px) {
@@ -1211,16 +1212,18 @@ a {
   appearance: none;
   border: none;
   background-color: transparent;
-  color: #ff6a00;
+  color: #14a2db;
 }
 #reading-progress::-webkit-progress-bar {
   background-color: transparent;
 }
 #reading-progress::-webkit-progress-value {
-  background-color: #ff6a00;
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
 }
 #reading-progress::-moz-progress-bar {
-  background-color: #ff6a00;
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
 }
 
 .effect-enlarge-shadow:hover {
@@ -1372,7 +1375,7 @@ a {
   left: 0;
   top: 0;
   width: 100%;
-  padding: 1.6em 5em 0;
+  padding: 1em 5em 0;
   background-color: #fff;
   z-index: 900;
 }
@@ -1408,7 +1411,7 @@ a {
   }
 }
 #site-header .logo img {
-  width: 180px;
+  width: 140px;
   -webkit-transition: 0.3s linear;
   -moz-transition: 0.3s linear;
   -ms-transition: 0.3s linear;
@@ -1417,7 +1420,7 @@ a {
 }
 @media screen and (max-width: 720px) {
   #site-header .logo img {
-    width: 150px;
+    width: 140px;
   }
 }
 #site-header.scrolled {
@@ -1430,7 +1433,7 @@ a {
   }
 }
 #site-header.scrolled .logo img {
-  width: 150px;
+  width: 120px;
 }
 
 @media screen and (max-width: 720px) {
@@ -1448,7 +1451,8 @@ a {
   }
 }
 #site-header .search-form .search-submit {
-  background-color: #ff6a00;
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
   color: white;
   border: 0;
   padding: 0.7em 1em;
@@ -1495,7 +1499,7 @@ a {
 }
 #site-header .nav a:hover,
 #site-header .nav li.has-submenu .item-more:hover {
-  color: #ff6a00;
+  color: #14a2db;
 }
 #site-header .nav li.has-submenu .item-more {
   margin: 0;
@@ -1595,7 +1599,8 @@ body.single #content {
 }
 
 #site-footer {
-  background-color: #ff6a00;
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
   color: #fff;
   margin: 4em 0 0;
   padding: 1.2em 7em;
@@ -1620,6 +1625,9 @@ body.single #content {
 }
 #site-footer a {
   color: #fff;
+}
+#site-footer .logo {
+  max-width: 180px;
 }
 @media screen and (max-width: 720px) {
   #site-footer .logo {
@@ -1648,7 +1656,7 @@ body.single #content {
   content: "";
   font-family: "Font Awesome 5 Free";
   background-color: #fff;
-  color: #ff6a00;
+  color: #14a2db;
   font-weight: bold;
   width: 40px;
   display: inline-block;
@@ -1750,7 +1758,8 @@ body.single #content {
   transition: 0.2s linear background;
 }
 .single article .content-wrapper .category a:hover {
-  background-color: #ff6a00;
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
   color: #fff;
 }
 .single article .content-wrapper .content a {
@@ -1826,7 +1835,8 @@ body.single #content {
   margin: 1em 0;
 }
 .single article .social-bar .social-links li a:before {
-  color: #ff6a00;
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
   font-size: 1.3em;
 }
 .single article .social-bar .social-links li a:hover:before {
@@ -1901,7 +1911,8 @@ body.single #content {
   }
 }
 .page-show-posts-grid .posts-lists .title {
-  background-color: #ff6a00;
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
   -webkit-border-radius: 200px;
   -moz-border-radius: 200px;
   -ms-border-radius: 200px;
@@ -1967,6 +1978,11 @@ body.single #content {
   width: 3em;
   height: 3em;
   line-height: 2.8em;
+  /*
+  &.current {
+  	color: $light-blue;
+  }
+  */
 }
 @media screen and (max-width: 720px) {
   .page-show-posts-grid ul.page-numbers li .page-numbers {
@@ -1976,10 +1992,10 @@ body.single #content {
   }
 }
 .page-show-posts-grid ul.page-numbers li .page-numbers:hover, .page-show-posts-grid ul.page-numbers li .page-numbers.current {
-  border-color: #ff6a00;
+  border-color: #14a2db;
 }
-.page-show-posts-grid ul.page-numbers li .page-numbers.current {
-  color: #ff6a00;
+.page-show-posts-grid ul.page-numbers li .page-numbers:visited {
+  color: grey;
 }
 .page-show-posts-grid ul.page-numbers li .page-numbers.next,
 .page-show-posts-grid ul.page-numbers li .page-numbers.prev {
@@ -2057,30 +2073,30 @@ body.page #content {
 body.page .panel-grid {
 	margin-bottom: 0 !important;
 	font-size: 1.2em;
-	
+
 	.widget-title {
 		font-size: 2em;
 		@media screen and (max-width:$mobile-width) {
 			font-size: 1.6em;
 		}
 	}
-	
+
 	.widget_text {
 		//padding: 0.6em;
 	}
-	
+
 	a {
 		color: $orange;
-		
+
 		&:hover {
 			text-decoration: underline;
 		}
 	}
-	
+
 	&.panel-no-style {
 		margin-top: 2em;
 	}
-	
+
 	a.btn {
 		display: inline-block;
 		background-color: #fff;
@@ -2091,7 +2107,7 @@ body.page .panel-grid {
 		border-radius: 6px;
 		line-height: 1em;
 		@include transition(0.4s);
-	
+
 		&:hover {
 			background-color: $orange;
 			color: #fff !important;
@@ -2112,7 +2128,7 @@ body.page .widget_sow-button .ow-button-base a {
 		border-radius: 6px;
 		line-height: 1em;
 		@include transition(0.4s);
-	
+
 		&:hover {
 			background-color: $orange;
 			color: #fff !important;
@@ -2167,13 +2183,13 @@ body.page .encabezado {
 		word-wrap: break-word;
 		-webkit-margin-after: 0;
 		line-height: 1.4em;
-		
+
 		@media screen and (max-width: $mobile-width) {
 			max-width: none;
 			font-size: 2em;
 		}
 	}
-	
+
 	.subtitulo {
 		color: #fff;
 		position: absolute;
@@ -2181,7 +2197,7 @@ body.page .encabezado {
 		font-size: 1.2em;
 		text-shadow: 1px 1px 6px #000;
 		font-weight: bold;
-		
+
 		@media screen and (max-width:$mobile-width) {
 			position: relative;
 			top:0;
@@ -2196,10 +2212,10 @@ body.page .alerta {
 	font-weight: bold;
 	text-align: center;
 	font-size: 0.94em;
-	
+
 	.panel-grid-cell{
 		padding: 0;
-		
+
 		.widget_text {
 			padding: 0;
 		}
@@ -2214,7 +2230,7 @@ body.page .imagen-vertical {
 	width: 100%;
 	min-height: 600px;
 	min-width: 300px;
-	 
+
 	 img {
 		height: initial !important;
 		max-width: none !important;
