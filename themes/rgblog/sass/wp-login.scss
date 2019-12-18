@@ -1,29 +1,24 @@
 body.login div#login {
 
-
 	h1 a {
 		background-image: url("img/logo.png");
 		height: 56px;
 		width: 226px;
-		background-size: 226px 61px;
+		background-size: 150px 61px;
 		background-repeat: no-repeat;
 		padding-bottom: 5px;
 	}
 
-
 	#wp-submit {
-		background: #ff6b00;
-		border-color: #cc5704;
-		box-shadow: 0 1px 0 #cc5704;
+		background: #14a2db;
+		border-color: #14a2db;
+		box-shadow: 0 1px 0 #14a2db;
 		text-shadow: none;
 	}
 	
 	#login_error, 
 	.message, 
 	.success {
-		border-left-color: #ff6b00;
+		border-left-color: #14a2db;
 	}
 }
-
-
-
