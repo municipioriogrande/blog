@@ -1835,13 +1835,20 @@ body.single #content {
   margin: 1em 0;
 }
 .single article .social-bar .social-links li a:before {
-  background-color: #14a2db;
-  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
   font-size: 1.3em;
 }
 .single article .social-bar .social-links li a:hover:before {
   transform: rotate(-10deg);
   transition: 0.1s ease-in-out transform;
+}
+
+.single article .columns .social-links li a:before {
+  color: #14a2db;
+}
+
+.single article .content-wrapper .social-share .social-links li a:before {
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
 }
 
 .single article .social-share {
@@ -2073,30 +2080,30 @@ body.page #content {
 body.page .panel-grid {
 	margin-bottom: 0 !important;
 	font-size: 1.2em;
-
+	
 	.widget-title {
 		font-size: 2em;
 		@media screen and (max-width:$mobile-width) {
 			font-size: 1.6em;
 		}
 	}
-
+	
 	.widget_text {
 		//padding: 0.6em;
 	}
-
+	
 	a {
 		color: $orange;
-
+		
 		&:hover {
 			text-decoration: underline;
 		}
 	}
-
+	
 	&.panel-no-style {
 		margin-top: 2em;
 	}
-
+	
 	a.btn {
 		display: inline-block;
 		background-color: #fff;
@@ -2107,7 +2114,7 @@ body.page .panel-grid {
 		border-radius: 6px;
 		line-height: 1em;
 		@include transition(0.4s);
-
+	
 		&:hover {
 			background-color: $orange;
 			color: #fff !important;
@@ -2128,7 +2135,7 @@ body.page .widget_sow-button .ow-button-base a {
 		border-radius: 6px;
 		line-height: 1em;
 		@include transition(0.4s);
-
+	
 		&:hover {
 			background-color: $orange;
 			color: #fff !important;
@@ -2183,13 +2190,13 @@ body.page .encabezado {
 		word-wrap: break-word;
 		-webkit-margin-after: 0;
 		line-height: 1.4em;
-
+		
 		@media screen and (max-width: $mobile-width) {
 			max-width: none;
 			font-size: 2em;
 		}
 	}
-
+	
 	.subtitulo {
 		color: #fff;
 		position: absolute;
@@ -2197,7 +2204,7 @@ body.page .encabezado {
 		font-size: 1.2em;
 		text-shadow: 1px 1px 6px #000;
 		font-weight: bold;
-
+		
 		@media screen and (max-width:$mobile-width) {
 			position: relative;
 			top:0;
@@ -2212,10 +2219,10 @@ body.page .alerta {
 	font-weight: bold;
 	text-align: center;
 	font-size: 0.94em;
-
+	
 	.panel-grid-cell{
 		padding: 0;
-
+		
 		.widget_text {
 			padding: 0;
 		}
@@ -2230,7 +2237,7 @@ body.page .imagen-vertical {
 	width: 100%;
 	min-height: 600px;
 	min-width: 300px;
-
+	 
 	 img {
 		height: initial !important;
 		max-width: none !important;

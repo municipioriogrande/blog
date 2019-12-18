@@ -12,8 +12,6 @@ $font-awesome-brands: "Font Awesome 5 Brands";
 $light-blue: #14a2db; //rgba(20,162,219,1)
 $aqua-green: #2ab99e; //rgba(42,185,158,1)
 
-
-
 @mixin border-radius($size) {
 	-webkit-border-radius: $size;
 		-moz-border-radius: $size;
@@ -50,17 +48,10 @@ $aqua-green: #2ab99e; //rgba(42,185,158,1)
 			   column-count: $property;
 }
 
-
 @mixin linear-gradient-2020() {
 	background-color: $light-blue;
 	background: linear-gradient(180deg, $light-blue 0%, $aqua-green 100%);
 }
-
-
-
-
-
-
 
 body {
 	font-size: 16px;
@@ -761,7 +752,6 @@ body.single #content {
 	margin: 1em 0;
 
 	a:before {
-		@include linear-gradient-2020();
 		font-size: 1.3em;
 	}
 	
@@ -769,6 +759,19 @@ body.single #content {
 		transform: rotate(-10deg);
 		transition: 0.1s ease-in-out transform;
 	}
+}
+
+.single article .columns .social-links li {
+	a:before {
+		color: $light-blue;
+	}
+}
+
+.single article .content-wrapper .social-share .social-links li {
+	a:before {
+		@include linear-gradient-2020();
+	}
+	
 }
 
 .single article .social-share  {
