@@ -49,7 +49,6 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 @import url("https://fonts.googleapis.com/css?family=Muli:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Muli:300,400,600,700,800");
 html {
   line-height: 1.15;
   /* 1 */
@@ -1099,10 +1098,35 @@ object {
   }
 }
 
+@font-face {
+  font-family: "Humanst 512 BT";
+  src: url("https://riogrande.gob.ar/wp-content/themes/mrg/fonts/humanst512-bt.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "Humanst 512 BT";
+  src: url("https://riogrande.gob.ar/wp-content/themes/mrg/fonts/humanst512-bt-bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Humanst 512 BT";
+  src: url("https://riogrande.gob.ar/wp-content/themes/mrg/fonts/humanst512-bt-italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Humanst 512 BT";
+  src: url("https://riogrande.gob.ar/wp-content/themes/mrg/fonts/humanst512-bt-bold-italic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
 body {
-  font-size: 16px;
+  font-size: 18px;
   color: #002855;
-  font-family: "Muli", Arial, sans-serif;
+  font-family: "Humanst 512 BT", Arial, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -1266,7 +1290,7 @@ a {
 .newsletter input[type=text],
 .newsletter input[type=email] {
   width: 100%;
-  font-family: "Muli", Arial, sans-serif;
+  font-family: "Humanst 512 BT", Arial, sans-serif;
   font-size: 0.8em;
   display: block;
   padding: 8px 12px;
@@ -1776,7 +1800,7 @@ body.single #content {
   font-size: medium;
 }
 .single article .content-wrapper .entry-content p span {
-  font-family: "Muli", Arial, sans-serif !important;
+  font-family: "Humanst 512 BT", Arial, sans-serif !important;
   font-size: inherit !important;
 }
 .single article .content-wrapper .date {
@@ -1884,7 +1908,7 @@ body.single #content {
   width: 48px;
   height: 48px;
   line-height: 1em;
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-weight: normal;
   transition: 0.15s ease-in-out transform;
 }
@@ -2267,7 +2291,7 @@ body.page .has-form {
   background-color: #f0f0f0;
   padding: 25px;
   border-radius: 10px;
-  font-family: "Muli", Arial, sans-serif;
+  font-family: "Humanst 512 BT", Arial, sans-serif;
 }
 body.page .has-form label {
   color: #666;
