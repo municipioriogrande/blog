@@ -2511,6 +2511,11 @@ body.page-template-tpl-hubspot .form-panel form .wpcf7-checkbox .wpcf7-list-item
   width: auto;
 }
 
+.error404 #page_caption .button-cta {
+  background-color: #14a2db;
+  background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
+}
+
 @media print {
   .search-form,
 .social-bar,
