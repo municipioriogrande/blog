@@ -1199,7 +1199,7 @@ a {
 
 .btn,
 .newsletter input[type=submit] {
-  background-color: #ff6a00;
+  background-color: #14a2db;
   border: 1px solid white;
   color: white;
   padding: 1.6em 4em;
@@ -1219,9 +1219,9 @@ a {
 }
 .btn:hover,
 .newsletter input[type=submit]:hover {
-  border: 1px solid #ff6a00;
+  border: 1px solid #14a2db;
   background: #fff;
-  color: #ff6a00;
+  color: #14a2db;
 }
 
 #reading-progress {
@@ -1269,7 +1269,7 @@ a {
 }
 
 .newsletter {
-  background-color: #ff6a00;
+  background-color: #14a2db;
   color: white;
   padding: 1.2em;
   -webkit-border-radius: 10px;
@@ -1326,7 +1326,7 @@ a {
 }
 
 .cta {
-  background-color: #ff6a00;
+  background-color: #14a2db;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
@@ -1376,7 +1376,7 @@ a {
 }
 .cta .text a.btn:hover {
   background-color: white;
-  color: #ff6a00 !important;
+  color: #14a2db !important;
 }
 .cta.cta-image {
   display: flex;
@@ -1761,7 +1761,7 @@ body.single #content {
 }
 
 .single article .content-wrapper {
-  max-width: 600px;
+  max-width: 720px;
   margin: 0 auto;
   font-size: 1.1em;
 }
@@ -1787,21 +1787,24 @@ body.single #content {
   color: #fff;
 }
 .single article .content-wrapper .content a {
-  color: #ff6a00;
+  color: #14a2db;
   text-decoration: underline;
+}
+.single article .content-wrapper .entry-content p {
+  text-align: left !important;
+}
+.single article .content-wrapper .entry-content p span {
+  font-family: "Humanst 512 BT", Arial, sans-serif !important;
+  font-size: inherit !important;
 }
 .single article .content-wrapper .entry-content p:first-child,
 .single article .content-wrapper .entry-content h3:first-child,
 .single article .content-wrapper .entry-content h4:first-child {
   font-weight: bold;
-  text-align: center;
+  text-align: center !important;
   font-style: italic;
   line-height: 1.7em;
   font-size: medium;
-}
-.single article .content-wrapper .entry-content p span {
-  font-family: "Humanst 512 BT", Arial, sans-serif !important;
-  font-size: inherit !important;
 }
 .single article .content-wrapper .date {
   font-size: small;
@@ -1815,7 +1818,7 @@ body.single #content {
   }
 }
 .single article .content-wrapper .mejs-container, .single article .content-wrapper .mejs-container .mejs-controls {
-  background: #ff6a00;
+  background: #14a2db;
   max-width: 500px;
 }
 
@@ -1898,7 +1901,7 @@ body.single #content {
 .single article .social-share .social-links li a:before {
   display: inline-block;
   color: #fff;
-  background-color: #ff6a00;
+  background-color: #14a2db;
   -webkit-border-radius: 5em;
   -moz-border-radius: 5em;
   -ms-border-radius: 5em;
@@ -2312,10 +2315,10 @@ body.page .has-form input[type=submit] {
   display: inline-block;
   margin: 2% auto 0px;
   padding: 9px 25px;
-  border: 2px solid #ff6a00;
+  border: 2px solid #14a2db;
   border-radius: 5px;
   background-color: #fff;
-  color: #ff6a00;
+  color: #14a2db;
   font-size: 17px;
   text-align: center;
   line-height: inherit;
@@ -2326,7 +2329,7 @@ body.page .has-form input[type=submit] {
 }
 body.page .has-form input[type=submit]:hover {
   color: #fff;
-  background-color: #ff6a00;
+  background-color: #14a2db;
 }
 body.page .has-form .wpcf7-checkbox .wpcf7-list-item {
   width: 100%;
@@ -2373,10 +2376,10 @@ body.page-template-tpl-hubspot a.btn {
   display: inline-block;
   background-color: #fff;
   padding: 1em 1.4em;
-  border: 2px solid #ff6a00;
-  border-bottom-color: #ff6a00;
+  border: 2px solid #14a2db;
+  border-bottom-color: #14a2db;
   text-transform: uppercase;
-  color: #ff6a00 !important;
+  color: #14a2db !important;
   border-radius: 6px;
   line-height: 1em;
   -webkit-transition: 0.4s;
@@ -2386,10 +2389,10 @@ body.page-template-tpl-hubspot a.btn {
   transition: 0.4s;
 }
 body.page-template-tpl-hubspot a.btn:hover {
-  background-color: #ff6a00;
+  background-color: #14a2db;
   color: #fff !important;
   text-decoration: none;
-  border-bottom-color: #ff6a00;
+  border-bottom-color: #14a2db;
 }
 body.page-template-tpl-hubspot img {
   border-radius: 10px;
@@ -2404,7 +2407,7 @@ body.page-template-tpl-hubspot .gblock-header {
 }
 body.page-template-tpl-hubspot .gblock-header h2 {
   margin: 0;
-  background-color: #ff6a00;
+  background-color: #14a2db;
   color: #fff;
   padding: 0.6em;
   width: auto;
@@ -2485,9 +2488,9 @@ body.page-template-tpl-hubspot .form-panel form input[type=submit] {
   display: inline-block;
   margin: 2% auto 0px;
   padding: 9px 25px;
-  border: 2px solid #ff6a00;
+  border: 2px solid #14a2db;
   border-radius: 5px;
-  color: #ff6a00;
+  color: #14a2db;
   font-size: 0.8em;
   text-align: center;
   line-height: inherit;
@@ -2498,7 +2501,7 @@ body.page-template-tpl-hubspot .form-panel form input[type=submit] {
 }
 body.page-template-tpl-hubspot .form-panel form input[type=submit]:hover {
   color: #fff;
-  background-color: #ff6a00;
+  background-color: #14a2db;
 }
 body.page-template-tpl-hubspot .form-panel form .wpcf7-checkbox .wpcf7-list-item {
   width: 100%;
@@ -2511,7 +2514,7 @@ body.page-template-tpl-hubspot .form-panel form .wpcf7-checkbox .wpcf7-list-item
   width: auto;
 }
 
-.error404 #page_caption .button-cta {
+.error404 .not-found .btn {
   background-color: #14a2db;
   background: linear-gradient(180deg, #14a2db 0%, #2ab99e 100%);
 }

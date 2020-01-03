@@ -165,7 +165,7 @@ a {
 .btn,
 .newsletter input[type="submit"] {
 
-	 background-color: $orange;
+	 background-color: $light-blue;
 	 border: 1px solid white;
 	 color: white;
 	 padding: 1.6em 4em;
@@ -177,9 +177,9 @@ a {
 	 cursor: pointer;
 
 	&:hover {
-		border: 1px solid $orange;
+		border: 1px solid $light-blue;
 		background: #fff;
-		color: $orange;
+		color: $light-blue;
 	}
 }
 
@@ -227,7 +227,7 @@ a {
 }
 
 .newsletter {
-	background-color: $orange;
+	background-color: $light-blue;
 	color: white;
 	padding: 1.2em;
 	@include border-radius(10px);
@@ -283,7 +283,7 @@ a {
  }
 
 .cta {
-	background-color:  $orange;
+	background-color:  $light-blue;
 	@include border-radius(10px);
 	overflow: hidden;
 	color: white;
@@ -322,7 +322,7 @@ a {
 
 			&:hover{
 				 background-color: white;
-				 color: $orange !important;
+				 color: $light-blue !important;
 			}
 
 		}
@@ -680,7 +680,7 @@ body.single #content {
 }
 
 .single article .content-wrapper{
-	max-width: 600px;
+	max-width: 720px;
 	margin: 0 auto;
 	font-size: 1.1em;
 
@@ -704,8 +704,21 @@ body.single #content {
 	}
 
 	.content a {
-		color: $orange;
+		color: $light-blue;
 		text-decoration: underline;
+	}
+
+	// overwrite entry's body style when using classic editor (module, Gutenberg)
+	//   this is because it looks bad when copy - pasting
+	.entry-content p {
+		text-align: left !important;
+
+		span {
+			//font-family: "Muli" !important;
+			font-family: $main-font !important;
+			font-size: inherit !important;
+		  }
+		  
 	}
 
 	// copete
@@ -714,19 +727,11 @@ body.single #content {
 	.entry-content h4:first-child
 	 {
 		font-weight: bold;
-		text-align: center;
+		text-align: center !important;
 		font-style: italic;
 		line-height: 1.7em;
 		font-size: medium;		
 	}
-
-	// overwrite entry's body style when using classic editor (module, Gutenberg)
-	//   this is because it looks bad when copy - pasting
-	.entry-content p span {
-		//font-family: "Muli" !important;
-		font-family: $main-font !important;
-		font-size: inherit !important;
-  	}
 
 	.date {
 		font-size: small;
@@ -739,7 +744,7 @@ body.single #content {
 	}
 	
 	.mejs-container, .mejs-container .mejs-controls {
-	   background: $orange;
+	   background: $light-blue;
 		max-width: 500px;
 	}
 }
@@ -829,7 +834,7 @@ body.single #content {
 			a:before {
 				display: inline-block;
 				color: #fff;
-				background-color: $orange;
+				background-color: $light-blue;
 				@include border-radius(5em);
 				padding: 0.6em;
 				width: 48px;
@@ -1242,10 +1247,10 @@ body.page .has-form {
 		display: inline-block;
 		margin: 2% auto 0px;
 		padding: 9px 25px;
-		border: 2px solid $orange;
+		border: 2px solid $light-blue;
 		border-radius: 5px;
 		background-color: #fff;
-		color: $orange;
+		color: $light-blue;
 		font-size: 17px;
 		text-align: center;
 		line-height: inherit;
@@ -1256,7 +1261,7 @@ body.page .has-form {
 	 
 		&:hover {
 			color: #fff;
-			background-color: $orange;
+			background-color: $light-blue;
 		}
 	}
 	
@@ -1322,10 +1327,10 @@ body.page-template-tpl-hubspot {
 		display: inline-block;
 		background-color: #fff;
 		padding: 1em 1.4em;
-		border: 2px solid $orange;
-		border-bottom-color: $orange;
+		border: 2px solid $light-blue;
+		border-bottom-color: $light-blue;
 		text-transform: uppercase;
-		color: $orange !important;
+		color: $light-blue !important;
 		border-radius: 6px;
 		line-height: 1em;
 		-webkit-transition: .4s;
@@ -1335,10 +1340,10 @@ body.page-template-tpl-hubspot {
 		transition: .4s;
 
 		&:hover {
-			background-color: $orange;
+			background-color: $light-blue;
 			color: #fff !important;
 			text-decoration: none;
-			border-bottom-color: $orange;
+			border-bottom-color: $light-blue;
 		}
 	}
 
@@ -1359,7 +1364,7 @@ body.page-template-tpl-hubspot {
 
 		h2 {
 			margin: 0;
-			background-color: $orange;
+			background-color: $light-blue;
 			color: #fff;
 			padding: .6em;
 			width: auto;
@@ -1458,9 +1463,9 @@ body.page-template-tpl-hubspot {
 				display: inline-block;
 				margin: 2% auto 0px;
 				padding: 9px 25px;
-				border: 2px solid $orange;
+				border: 2px solid $light-blue;
 				border-radius: 5px;
-				color: $orange;
+				color: $light-blue;
 				font-size: 0.8em;
 				text-align: center;
 				line-height: inherit;
@@ -1471,7 +1476,7 @@ body.page-template-tpl-hubspot {
 
 				&:hover {
 					color: #fff;
-					background-color: $orange;
+					background-color: $light-blue;
 				}
 			}
 
@@ -1492,6 +1497,6 @@ body.page-template-tpl-hubspot {
 	}
 }
 
-.error404 #page_caption .button-cta {
+.error404 .not-found .btn {
 	@include linear-gradient-2020();
 }
