@@ -3,8 +3,8 @@ Tags: popular posts, top 10, counter, top posts, daily popular, page views, stat
 Contributors: webberzone, Ajay
 Donate link: https://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 4.7
-Tested up to: 5.2
+Requires at least: 4.8
+Tested up to: 5.3
 License: GPLv2 or later
 
 Track daily and total visits on your blog posts. Display the count as well as popular and trending posts.
@@ -63,11 +63,13 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 4. Top 10 options - Thumbnail options
 5. Top 10 options - Styles
 6. Top 10 options - Maintenance
-7. Top 10 widget options
-8. Top 10 Meta box on the Edit Post screen
-9. Top 10 Tools page
-10. Top 10 - Popular posts view in Admin
-11. Top 10 Export/Import interface
+7. Top 10 options - Feed
+8. Top 10 widget options
+9. Top 10 Meta box on the Edit Post screen
+10. Top 10 Tools page
+11. Top 10 - Popular posts view in Admin
+12. Top 10 Export/Import interface
+13. Top 10 - Popular posts view in Network Admin
 
 == Installation ==
 
@@ -157,6 +159,15 @@ add_filter( 'manage_edit-projects_sortable_columns', 'tptn_column_register_sorta
 
 
 == Changelog ==
+
+= 2.8.0 =
+
+Release post: [https://wzn.io/34VvWMe](https://wzn.io/34VvWMe)
+
+* Features:
+	* Custom feed for popular posts: Find new options under a new tab called Feed in the settings page where you can set the URL for the overall and daily feeds
+	* New page in the network admin menu to view the popular posts across the network
+	* Also delete transients and other settings on uninstall
 
 = 2.7.0 =
 
@@ -287,7 +298,7 @@ For previous changelog entries, please refer to the separate changelog.txt file
 
 == Upgrade Notice ==
 
-= 2.7.0 =
-* New admin interface to import and export settings and the counts table.
+= 2.6.3 =
+* Bug fix release! Please verify your settings after upgrade.
 Check the Changelog for more details
 

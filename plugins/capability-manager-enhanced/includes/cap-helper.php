@@ -232,8 +232,9 @@ class CME_Cap_Helper {
 		
 		// count the number of taxonomies that use each capability
 		foreach( $wp_taxonomies as $taxonomy => $tx_obj ) {
-			$this_tx_caps = array_unique( (array) $tx_obj->cap );
-			
+			//$this_tx_caps = array_unique( (array) $tx_obj->cap );
+			$this_tx_caps = (array) $tx_obj->cap;
+
 			foreach( $this_tx_caps as $cap_name ) {
 				if ( ! isset( $this->all_taxonomy_caps[$cap_name] ) ) {
 					$this->all_taxonomy_caps[$cap_name] = 1;
@@ -292,10 +293,36 @@ class CME_Cap_Helper {
 					}
 				}
 				$tx_caps = (array) $wp_taxonomies[$taxonomy]->cap;
-				
+
+
 				// Optionally, also force edit_terms and delete_terms to be distinct from manage_terms, and force a distinct assign_terms capability
 				if ( in_array( $taxonomy, $detailed_taxonomies ) ) {
 					foreach( $tx_detail_caps as $cap_property => $replacement_cap_format ) {
+						$tx_cap_usage = array_count_values($tx_caps);
+
+						// If a unique edit/delete capability is already defined, don't change the definition
+						if (!empty($tx_caps[$cap_property]) 
+						&& (empty($this->all_taxonomy_caps[$tx_caps[$cap_property]]) || $this->all_taxonomy_caps[$tx_caps[$cap_property]] == 1) 
+						&& ($tx_cap_usage[$tx_caps[$cap_property]] == 1)
+						&& !defined('CAPSMAN_LEGACY_DETAILED_TAX_CAPS')
+						) {
+							// If roles were already configured with generated capability name, migrate to custom predefined capability name
+							$custom_detailed_taxonomy_caps = true;
+							$generated_cap_name = str_replace('_terms', "_{$plural_type}", $replacement_cap_format);
+
+							if (!get_option("cme_migrated_taxonomy_caps")) {
+								foreach ($wp_roles->roles as $role_name => $role) {
+									if (!empty($role['capabilities'][$generated_cap_name])) {
+										$_role = get_role($role_name);
+										$_role->add_cap($tx_caps[$cap_property]);
+										$_role->remove_cap($generated_cap_name);
+									}
+								}
+							}
+
+							continue;
+						}
+
 						if ( ! empty( $this->all_taxonomy_caps[ $tx_caps[$cap_property] ] ) ) {
 							// assign_terms is otherwise not forced taxonomy-distinct 
 							$wp_taxonomies[$taxonomy]->cap->$cap_property = str_replace( '_terms', "_{$plural_type}", $replacement_cap_format );
@@ -312,6 +339,10 @@ class CME_Cap_Helper {
 								break;
 							}
 						}
+					}
+
+					if (!empty($custom_detailed_taxonomy_caps)) {
+						update_option("cme_migrated_taxonomy_caps", true);
 					}
 				}
 				

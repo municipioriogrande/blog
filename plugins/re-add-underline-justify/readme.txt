@@ -1,20 +1,17 @@
 === Re-add text underline and justify ===
 Contributors: briKou
 Donate link: https://www.paypal.me/BriceCapobianco
-Tags: mce, editor, underline, justify, tinyMCE, 4.7, wysiwyg, visual editor, gutenberg, 5.0
+Tags: editor, underline, justify, wysiwyg, gutenberg, ACF
 Requires at least: 4.7
-Tested up to: 4.9.8
+Tested up to: 5.3
 Requires PHP: 5.5.12
-Stable tag: 0.2
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
  
-This tiny plugin re-adds the Editor text underline & text justify buttons in the WYSIWYG removed in WordPress 4.7. Works with Gutenberg.
-
-
 == Description ==
 
-**Version 0.2 adds support for Gutenberg for its "Classic" bloc only.**
+**This tiny plugin re-adds the Editor text underline & text justify buttons in the WYSIWYG removed in WordPress 4.7. It works well with the [Classic Editor](https://fr.wordpress.org/plugins/classic-editor/) plugin, [Advanced Custom Fields](https://fr.wordpress.org/plugins/advanced-custom-fields/) (Free & Pro) and is also compatible with the Gutenberg's "Classic" bloc.**
 
 In WordPress 4.7, the core developper team decided to make various changes in the editor (TinyMce WYSIWYG), including removing the **underline and justify buttons** and rearranging some of the toolbar buttons.
 If you don't want to change the way you edit your content and/or don't want to confuse your customers with a new contribution interface, this very lightweight plugin will set the editor style back to its previous state (like in WordPress 4.6 and above versions).
@@ -23,14 +20,11 @@ If you don't want to change the way you edit your content and/or don't want to c
 
 3 options are available for the Editor style:
 
-* Default - without underline & justify buttons
-* Re-add underline & justify buttons
+* Without underline & justify buttons
+* Default - Re-add underline & justify buttons
 * Re-add justify only
 
 Please note, the previous option "Re-add underline & justify + rearrange" has been deprecated in 0.2 (sept. 2018) as it causes conflicts with the new Gutenberg editor. This option automatically switches to "Re-add underline & justify buttons" from now on.
-
-**IMPORTANT:** Try various options before posting a bug report. Some plugins such as ACF (free version) are using their own list of buttons and can create conflicts with this plugin.
-
 
 [DOCUMENTATION](https://www.b-website.com/re-add-text-underline-and-justify "Plugin documentation")
 
@@ -43,8 +37,8 @@ Please note, the previous option "Re-add underline & justify + rearrange" has be
 == Installation ==
 
 1. Upload and activate the plugin (or install it through the WP admin console)
-2. Go to Settings -> Writing and select the option you want under "Editor style".
-3. That's it, it is ready to use!
+2. That's it, it is ready to use!
+3. If you wan't to change the default parameter, go to Settings -> Writing and select the option you want under "Editor style".
 
 == Frequently Asked Questions ==
 
@@ -62,6 +56,10 @@ Just go to Settings -> Writing and select the option you want under "Editor styl
 
 
 == Changelog ==
+
+= 0.3 - 14/11/2019 =
+* Tested on WP 5.3 with success!
+* Change default option to "Re-add underline & justify buttons" on plugin activation
 
 = 0.2 - 09/04/2018 =
 * Tested on WP 4.9.8 with success!

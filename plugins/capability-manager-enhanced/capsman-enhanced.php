@@ -3,7 +3,7 @@
  * Plugin Name: Capability Manager Enhanced
  * Plugin URI: https://publishpress.com
  * Description: Manage WordPress role definitions, per-site or network-wide. Organizes post capabilities by post type and operation.
- * Version: 1.7.5
+ * Version: 1.8.1
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Text Domain: capsman-enhanced
@@ -23,12 +23,12 @@
  * @copyright   Copyright (C) 2009, 2010 Jordi Canals; modifications Copyright (C) 2019 PublishPress
  * @license		GNU General Public License version 3
  * @link		https://publishpress.com
- * @version 	1.7.5
+ * @version 	1.8
  */
 
 if ( ! defined( 'CAPSMAN_VERSION' ) ) {
-	define( 'CAPSMAN_VERSION', '1.7.5' );
-	define( 'CAPSMAN_ENH_VERSION', '1.7.5' );
+	define( 'CAPSMAN_VERSION', '1.8.1' );
+	define( 'CAPSMAN_ENH_VERSION', '1.8.1' );
 }
 
 if ( cme_is_plugin_active( 'capsman.php' ) ) {
@@ -81,10 +81,6 @@ if ( cme_is_plugin_active( 'capsman.php' ) ) {
 			
 			require_once ( dirname(__FILE__) . '/includes/manager.php' );
 			$capsman = new CapabilityManager();
-			
-			if ( isset($_REQUEST['page']) && ( 'capsman' == $_REQUEST['page'] ) ) {
-				add_action( 'admin_enqueue_scripts', '_cme_pp_scripts' );
-			}
 		} else {
 			load_plugin_textdomain('capsman-enhanced', false, basename(dirname(__FILE__)) .'/lang');
 			add_action( 'admin_menu', 'cme_submenus', 20 );
@@ -141,21 +137,20 @@ function _cme_init() {
 	load_plugin_textdomain('capsman-enhanced', false, dirname(__FILE__) . '/lang');
 }
 
-function _cme_pp_scripts() {
-	wp_enqueue_style( 'plugin-install' );
-	wp_enqueue_script( 'plugin-install' );
-	add_thickbox();
-}
-
 // perf enchancement: display submenu links without loading framework and plugin code
 function cme_submenus() {
 	$cap_name = ( is_super_admin() ) ? 'manage_capabilities' : 'restore_roles';
 	add_management_page(__('Capability Manager', 'capsman-enhanced'),  __('Capability Manager', 'capsman-enhanced'), $cap_name, 'capsman' . '-tool', 'cme_fakefunc');
 	
-	if ( did_action( 'pp_admin_menu' ) ) {	// Put Capabilities link on Permissions menu if Press Permit is active and user has access to it
+	if (did_action('pp_admin_menu')) {	// Put Capabilities link on Permissions menu if Press Permit is active and user has access to it
 		global $pp_admin;
 		$menu_caption = ( defined('WPLANG') && WPLANG && ( 'en_EN' != WPLANG ) ) ? __('Capabilities', 'capsman-enhanced') : 'Role Capabilities';
 		add_submenu_page( $pp_admin->get_menu('options'), __('Capability Manager', 'capsman-enhanced'),  $menu_caption, 'manage_capabilities', 'capsman', 'cme_fakefunc' );
+	
+	} elseif(did_action('presspermit_admin_menu') && function_exists('presspermit')) {
+		$menu_caption = ( defined('WPLANG') && WPLANG && ( 'en_EN' != WPLANG ) ) ? __('Capabilities', 'capsman-enhanced') : 'Role Capabilities';
+		add_submenu_page( presspermit()->admin()->getMenuParams('options'), __('Capability Manager', 'capsman-enhanced'),  $menu_caption, 'manage_capabilities', 'capsman', 'cme_fakefunc' );
+	
 	} else {
 		add_users_page( __('Capability Manager', 'capsman-enhanced'),  __('Capabilities', 'capsman-enhanced'), 'manage_capabilities', 'capsman', 'cme_fakefunc');	
 	}

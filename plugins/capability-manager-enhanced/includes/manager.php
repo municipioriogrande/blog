@@ -43,7 +43,7 @@ function _cme_core_caps() {
 	$core_caps = array_fill_keys( array( 'switch_themes', 'edit_themes', 'activate_plugins', 'edit_plugins', 'edit_users', 'edit_files', 'manage_options', 'moderate_comments', 
 	'manage_links', 'upload_files', 'import', 'unfiltered_html', 'read', 'delete_users', 'create_users', 'unfiltered_upload', 'edit_dashboard',
 	'update_plugins', 'delete_plugins', 'install_plugins', 'update_themes', 'install_themes', 
-	'update_core', 'list_users', 'remove_users', 'add_users', 'promote_users', 'edit_theme_options', 'delete_themes', 'export' ), true );
+	'update_core', 'list_users', 'remove_users', 'promote_users', 'edit_theme_options', 'delete_themes', 'export' ), true );
 	
 	ksort( $core_caps );
 	return $core_caps;
@@ -131,6 +131,10 @@ class CapabilityManager
 
 		// Load styles
 		add_action('admin_print_styles', array($this, 'adminStyles'));
+
+		if ( isset($_REQUEST['page']) && ( 'capsman' == $_REQUEST['page'] ) ) {
+			add_action('admin_enqueue_scripts', array($this, 'adminScriptsPP'));
+		}
 	}
 
     /**
@@ -145,6 +149,8 @@ class CapabilityManager
 		if ( empty( $_REQUEST['page'] ) || ! in_array( $_REQUEST['page'], array( 'capsman', 'capsman-tool' ) ) )
 			return;
 		
+		wp_enqueue_style('revisionary-admin-common', $this->mod_url . '/common/css/pressshack-admin.css', [], CAPSMAN_ENH_VERSION);
+
 		wp_register_style( $this->ID . 'framework_admin', $this->mod_url . '/framework/styles/admin.css', false, CAPSMAN_ENH_VERSION);
    		wp_enqueue_style( $this->ID . 'framework_admin');
 		
@@ -164,6 +170,12 @@ class CapabilityManager
 		);
     }
 	
+	function adminScriptsPP() {
+		wp_enqueue_style( 'plugin-install' );
+		wp_enqueue_script( 'plugin-install' );
+		add_thickbox();
+	}
+
 	/**
 	 * Creates some filters at module load time.
 	 *
@@ -263,6 +275,11 @@ class CapabilityManager
 			global $pp_admin;
 			$menu_caption = ( defined('WPLANG') && WPLANG && ( 'en_EN' != WPLANG ) ) ? __('Capabilities', 'capsman-enhanced') : 'Role Capabilities';
 			add_submenu_page( $pp_admin->get_menu('options'), __('Capability Manager', 'capsman-enhanced'),  $menu_caption, 'manage_capabilities', $this->ID, array($this, 'generalManager') );
+		
+		} elseif(did_action('presspermit_admin_menu') && function_exists('presspermit')) {
+			$menu_caption = ( defined('WPLANG') && WPLANG && ( 'en_EN' != WPLANG ) ) ? __('Capabilities', 'capsman-enhanced') : 'Role Capabilities';
+			add_submenu_page( presspermit()->admin()->getMenuParams('options'), __('Capability Manager', 'capsman-enhanced'),  $menu_caption, 'manage_capabilities', $this->ID, array($this, 'generalManager') );
+		
 		} else {
 			add_users_page( __('Capability Manager', 'capsman-enhanced'),  __('Capabilities', 'capsman-enhanced'), 'manage_capabilities', $this->ID, array($this, 'generalManager'));
 		}	

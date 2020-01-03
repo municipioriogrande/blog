@@ -177,7 +177,7 @@ class Admin
             'teaser' => 'On the site front end, replace non-readable content with placeholder text.',
             'status-control' => 'Custom post statuses: Control permissions for multi-step Workflow or custom Privacy.',
             'file-access' => 'Filters direct file access, based on user&apos;s access to post(s) which the file is attached to.',
-            'import' => 'Import Role Scoper and PP1 groups, roles, restrictions and settings.',
+            'import' => 'Import Role Scoper groups, roles, restrictions and settings.',
             'membership' => 'Allows Permission Group membership to be date-limited (delayed and/or scheduled for expiration).',
             'sync' => 'Create or synchronize posts to match users. Designed for Team / Staff plugins, but with broad usage potential.',
             'role-scoper-migration-advisor' => 'Analyzes your Role Scoper installation, identifying PP migration readiness or issues.', 
@@ -190,7 +190,7 @@ class Admin
             'teaser' => 'On the site front end, replace non-readable content with placeholder text. Can be enabled for any post type. Custom filters are provided but no programming is required for basic usage.',
             'status-control' => 'Custom post statuses: Workflow statuses (also requires Collaborative Publishing module) allow unlimited orderable steps between pending and published, each with distinct capability requirements and role assignments.  Both privacy and workflow statuses can be type-specific.',
             'file-access' => 'Filters direct file access, based on user&apos;s access to post(s) which the file is attached to. No additional configuration required. Creates/modifies .htaccess file in uploads folder (and in main folder for multisite).',
-            'import' => 'Import Role Scoper and PP1 groups, roles, restrictions and settings.',
+            'import' => 'Import Role Scoper groups, roles, restrictions and settings.',
             'membership' => 'Allows Permission Group membership to be date-limited (delayed and/or scheduled for expiration). Simple date picker UI alongside member selection.',
             'sync' => 'Create or synchronize posts to match users. Designed for Team / Staff plugins, but with broad usage potential.',
             'role-scoper-migration-advisor' => 'Analyzes your Role Scoper installation, identifying groups, roles, restrictions and options which can (or cannot) be automatically imported by the Import module.', 
@@ -221,5 +221,46 @@ class Admin
         require_once(PRESSPERMIT_CLASSPATH . '/ErrorNotice.php');
         $err = new \PublishPress\Permissions\ErrorNotice();
         $err->addNotice($notice, ['id' => $msg_id]);
+    }
+
+    function publishpressFooter() {
+    ?>
+        <footer>
+
+        <div class="pp-rating">
+        <a href="https://wordpress.org/support/plugin/press-permit-core/reviews/#new-post" target="_blank" rel="noopener noreferrer">
+        <?php printf( 
+            __('If you like %s, please leave us a %s rating. Thank you!', 'press-permit-core'),
+            '<strong>PressPermit</strong>',
+            '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
+            );
+        ?>
+        </a>
+        </div>
+
+        <hr>
+        <nav>
+        <ul>
+        <li><a href="https://publishpress.com/presspermit" target="_blank" rel="noopener noreferrer" title="<?php _e('About PressPermit', 'press-permit-core');?>"><?php _e('About', 'press-permit-core');?>
+        </a></li>
+        <li><a href="https://publishpress.com/documentation/presspermit-start/" target="_blank" rel="noopener noreferrer" title="<?php _e('PressPermit Documentation', 'press-permit-core');?>"><?php _e('Documentation', 'press-permit-core');?>
+        </a></li>
+        <li><a href="https://publishpress.com/contact" target="_blank" rel="noopener noreferrer" title="<?php _e('Contact the PublishPress team', 'press-permit-core');?>"><?php _e('Contact', 'press-permit-core');?>
+        </a></li>
+        <li><a href="https://twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-twitter"></span>
+        </a></li>
+        <li><a href="https://facebook.com/publishpress" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-facebook"></span>
+        </a></li>
+        </ul>
+        </nav>
+
+        <div class="pp-pressshack-logo">
+        <a href="//publishpress.com" target="_blank" rel="noopener noreferrer">
+        <img src="<?php echo plugins_url('', PRESSPERMIT_FILE) . '/common/img/publishpress-logo.png';?>" />
+        </a>
+        </div>
+
+        </footer>
+    <?php
     }
 }

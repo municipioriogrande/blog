@@ -2,15 +2,15 @@
 /*
  * Plugin Name: Re-add text underline and justify
  * Plugin URI: https://www.b-website.com/re-add-text-underline-and-justify
- * Description: This tiny plugin re-adds the Editor text underline & justify buttons in the WYSIWYG removed in WordPress 4.7. Works with Gutenberg.
+ * Description: Re-adds the Editor text underline & justify buttons in the WYSIWYG removed in WordPress 4.7. Works with Classic Editor, ACF and Gutenberg.
  * Author: Brice Capobianco
- * Version: 0.2
+ * Version: 0.3
  * Author URI: https://www.b-website.com/
  * Domain Path: /langs
  * Text Domain: re-add-underline-justify
  */
 
-/*  Copyright 2018  Brice CAPOBIANCO  (contact : http:// b-website.com/contact)
+/*  Copyright 2019  Brice CAPOBIANCO  (contact : http:// b-website.com/contact)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -118,7 +118,7 @@ function ratb_setting_input() {
 	
 	//Default value
 	if( empty( $options ) ){
-		$options[ 'ratb_mce_style' ] = 1;
+		$options[ 'ratb_mce_style' ] = 2;
 	}
 	
 	// The option "Re-add underline & justify + rearrange" has been deprecated in 0.2
@@ -131,8 +131,8 @@ function ratb_setting_input() {
 	// Output the field
 	echo '	
 	<select id="ratb_mce_style" name="ratb_options[ratb_mce_style]">
-		<option value="1"' . selected( $options[ 'ratb_mce_style' ], 1, false ) . '>' . __( 'Default - without underline & justify buttons', 're-add-underline-justify' ) . '</option>
-		<option value="2"' . selected( $options[ 'ratb_mce_style' ], 2, false ) . '>' . __( 'Re-add underline & justify buttons', 're-add-underline-justify' ) . '</option>
+		<option value="1"' . selected( $options[ 'ratb_mce_style' ], 1, false ) . '>' . __( 'Without underline & justify buttons', 're-add-underline-justify' ) . '</option>
+		<option value="2"' . selected( $options[ 'ratb_mce_style' ], 2, false ) . '>' . __( 'Default - Re-add underline & justify buttons', 're-add-underline-justify' ) . '</option>
 		<option value="4"' . selected( $options[ 'ratb_mce_style' ], 4, false ) . '>' . __( 'Re-add justify only', 're-add-underline-justify' ) . '</option>
 	</select>';
 	
@@ -148,7 +148,7 @@ function ratb_buttons_lines_tiny_mce(){
 	$options = get_option( 'ratb_options' );
 	
 	// Conditionnal MCE display
-	if ( isset( $options[ 'ratb_mce_style' ] ) && ( $options[ 'ratb_mce_style' ] == 2 || $options[ 'ratb_mce_style' ] == 3 ) ) {
+	if ( !isset( $options[ 'ratb_mce_style' ] ) || isset( $options[ 'ratb_mce_style' ] ) && ( $options[ 'ratb_mce_style' ] == 2 || $options[ 'ratb_mce_style' ] == 3 ) ) {
 		
 		// The option "Re-add underline & justify + rearrange" has been deprecated in 0.2
 			// So we replace option 3 with 2 if the former was selected.
