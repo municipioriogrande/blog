@@ -13,7 +13,7 @@ $main-font: 'Humanst 512 BT', Arial, sans-serif;
 
 @font-face {
 	font-family: 'Humanst 512 BT';
-	src: url('https://riogrande.gob.ar/wp-content/themes/mrg/fonts/humanst512-bt.ttf') format('truetype');
+	src: url('fonts/humanst512-bt.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 	font-display: fallback;
@@ -21,20 +21,20 @@ $main-font: 'Humanst 512 BT', Arial, sans-serif;
 
  @font-face {
 	font-family: 'Humanst 512 BT';
-	src: url('https://riogrande.gob.ar/wp-content/themes/mrg/fonts/humanst512-bt-bold.ttf') format('truetype');
+	src: url('fonts/humanst512-bt-bold.ttf') format('truetype');
 	font-weight: bold;
 	font-style: normal;
  }
  @font-face {
 	font-family: 'Humanst 512 BT';
-	src: url('https://riogrande.gob.ar/wp-content/themes/mrg/fonts/humanst512-bt-italic.ttf') format('truetype');
+	src: url('fonts/humanst512-bt-italic.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
  }
 
  @font-face {
 	font-family: 'Humanst 512 BT';
-	src: url('https://riogrande.gob.ar/wp-content/themes/mrg/fonts/humanst512-bt-bold-italic.ttf') format('truetype');
+	src: url('fonts/humanst512-bt-bold-italic.ttf') format('truetype');
 	font-weight: bold;
 	font-style: italic;
  }
@@ -722,9 +722,9 @@ body.single #content {
 	}
 
 	// copete
-	.entry-content p:first-child,
-	.entry-content h3:first-child,
-	.entry-content h4:first-child
+	.entry-content > p:first-child,
+	.entry-content > h3:first-child,
+	.entry-content > h4:first-child
 	 {
 		font-weight: bold;
 		text-align: center !important;
